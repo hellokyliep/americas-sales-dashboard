@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMERICAS Weekly Snapshot — May 4–11, 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#0d0f12;--sur:#151820;--bor:#ffffff0f;--bor2:#ffffff18;--txt:#f0f2f5;--mut:#7a8299;--acc:#4f8ef7;--grn:#3dd68c;--red:#f25c5c;--blu:#4f8ef7;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+.hdr{padding:24px 40px 18px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--bor);}
+.hdr h1{font-size:19px;font-weight:600;letter-spacing:-.3px;}
+.hdr p{font-size:13px;color:var(--mut);margin-top:3px;}
+.hdr-r{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut);text-align:right;line-height:1.9;}
+.hdr-r span{color:var(--acc);font-weight:500;}
+.nav{display:flex;padding:0 40px;border-bottom:1px solid var(--bor);flex-wrap:wrap;}
+.tab{font-size:13px;padding:12px 16px;cursor:pointer;color:var(--mut);background:none;border:none;border-bottom:2px solid transparent;font-family:inherit;}
+.tab.on{color:var(--txt);border-bottom-color:var(--acc);font-weight:500;}
+.ct{padding:26px 40px;display:none;}
+.ct.on{display:block;}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.card{background:var(--sur);border:1px solid var(--bor);border-radius:10px;padding:15px 17px;}
+.cl{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
+.cv{font-size:22px;font-weight:600;letter-spacing:-.4px;}
+.cs{font-size:12px;color:var(--mut);margin-top:5px;}
+.dl{display:flex;flex-direction:column;gap:6px;}
+.di{background:#1c2030;border:1px solid var(--bor);border-radius:9px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.dil{flex:1;min-width:0;}
+.dn{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dm{font-size:11px;color:var(--mut);margin-top:3px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.da{font-size:13px;font-weight:500;white-space:nowrap;}
+.ga{color:#3dd68c;}.ra{color:#f25c5c;}.ba{color:#4f8ef7;}
+.bdg{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500;}
+.nb{background:#0c447c44;color:#4f8ef7;}.eb{background:#2c2c2a44;color:#888780;}
+.cw{position:relative;width:100%;height:240px;margin-bottom:20px;}
+.cws{position:relative;width:100%;height:190px;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;}
+.sh{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px;}
+.ftr{padding:14px 40px;border-top:1px solid var(--bor);font-size:11px;color:var(--mut);display:flex;justify-content:space-between;}
+@media(max-width:860px){.hdr,.nav,.ct,.ftr{padding-left:16px;padding-right:16px;}.cards{grid-template-columns:repeat(2,1fr);}.two{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div><h1>AMERICAS — Weekly Snapshot</h1><p>May 4–11, 2026 &nbsp;·&nbsp; New/Expansion revenue only &nbsp;·&nbsp; ARR excluded</p></div>
+  <div class="hdr-r">Wins &nbsp;<span id="h-w">—</span><br>Losses &nbsp;<span id="h-l">—</span><br>New pipeline &nbsp;<span id="h-p">—</span></div>
+</div>
+<div class="nav">
+  <button class="tab on" onclick="show('w')" id="t-w">Wins</button>
+  <button class="tab" onclick="show('l')" id="t-l">Losses</button>
+  <button class="tab" onclick="show('p')" id="t-p">New pipeline</button>
+  <button class="tab" onclick="show('r')" id="t-r">By rep</button>
+  <button class="tab" onclick="show('ww')" id="t-ww">Week over week</button>
+  <button class="tab" onclick="show('s')" id="t-s">Summary</button>
+</div>
+<div class="ct on" id="tab-w"><div class="cards" id="wc"></div><div class="dl" id="wl"></div></div>
+<div class="ct" id="tab-l"><div class="cards" id="lc"></div><div class="dl" id="ll"></div></div>
+<div class="ct" id="tab-p"><div class="cards" id="pc"></div><div class="dl" id="pl"></div></div>
+<div class="ct" id="tab-r">
+  <div class="two">
+    <div><div class="sh">Wins by rep</div><div class="cws"><canvas id="cwr" role="img" aria-label="Wins by rep May 4-11 2026">Wins by rep.</canvas></div></div>
+    <div><div class="sh">Losses by rep</div><div class="cws"><canvas id="clr" role="img" aria-label="Losses by rep May 4-11 2026">Losses by rep.</canvas></div></div>
+  </div>
+  <div class="sh" style="margin-top:8px">New business vs existing business</div>
+  <div class="cards" id="dc"></div>
+  <div class="cw" style="height:170px"><canvas id="cdt" role="img" aria-label="Deal type wins vs losses">Deal type chart.</canvas></div>
+</div>
+<div class="ct" id="tab-ww"><div class="cards" id="wwc"></div><div class="cw"><canvas id="cww" role="img" aria-label="Week over week comparison">WoW chart.</canvas></div></div>
+<div class="ct" id="tab-s"><div class="cards" id="sc"></div><div class="cw"><canvas id="cs" role="img" aria-label="Summary wins losses pipeline">Summary chart.</canvas></div></div>
+<div class="ftr"><span>AMERICAS Sales Pipeline · New/Expansion only · ARR excluded · Wins ≥$5k · Losses ≥$15k</span><span>Week of May 4–11, 2026</span></div>
+<script>
+const OWN={'123123099':'Wayne Farenga','163838380':'Ken Blum','163659845':'Tony Graves','97018809':'Travis Janssen','558345085':'Russ Newton','1207578277':'Michael Kohler','584449824':'Jerry Guier','220756225':'CART/Caption'};
+const CORE=['123123099','163838380','163659845','97018809','558345085','1207578277','584449824'];
+const sn=id=>(OWN[id]||'Other').split(' ')[1]||OWN[id];
+const f$=v=>{v=parseFloat(v)||0;return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1000?'$'+Math.round(v/1000)+'k':'$'+Math.round(v);};
+const ff$=v=>'$'+(parseFloat(v)||0).toLocaleString('en-US',{maximumFractionDigits:0});
+
+// WINS: New/Expansion only (≥$5k), ARR removed (CTI Support $31,203 removed)
+const W=[
+  {n:"Disney - New Control Rooms",o:"123123099",a:144576,t:"existingbusiness"},
+  {n:"Sinclair - LEXI USAGE Apr Q4 FY26",o:"163659845",a:116113.6,t:"existingbusiness"},
+  {n:"KSL - Lexi Unlimited Plan",o:"584449824",a:27500,t:"existingbusiness"},
+  {n:"South Carolina ETV - HD492",o:"584449824",a:24543,t:"newbusiness"},
+  {n:"AVI Systems - PERATON San Diego",o:"1207578277",a:18156,t:"newbusiness"},
+  {n:"WTVM - Lexi Unlimited Plan",o:"584449824",a:15000,t:"newbusiness"},
+  {n:"City of Weston - Encoder Pro",o:"163838380",a:12565,t:"newbusiness"},
+  {n:"Fiber Group - HD492 CBS",o:"584449824",a:11475,t:"existingbusiness"},
+  {n:"Fiber Group - HD492",o:"123123099",a:11475,t:"existingbusiness"},
+  {n:"Performance Contractors Texas",o:"123123099",a:8935,t:"existingbusiness"},
+  {n:"Daytona Beach - LEXI 500 Block",o:"163838380",a:8000,t:"newbusiness"},
+  {n:"Future Grade - Lexi 500",o:"123123099",a:6800,t:"existingbusiness"},
+  {n:"WarnerMedia - Falcon/Lexi May2026",o:"163659845",a:6600,t:"existingbusiness"},
+];
+
+// LOSSES: ≥$15k, removed Main Street Sports + both Sinclair entries (project/closed elsewhere)
+const L=[
+  {n:"The City of Austin - HD492 x5",o:"1207578277",a:78642,t:"existingbusiness",r:""},
+  {n:"Mayor's Office Cable - Baltimore Schools",o:"163838380",a:75775,t:"existingbusiness",r:""},
+  {n:"Innuvo - HD492/AV610 x3 & Lexi",o:"163838380",a:59164,t:"newbusiness",r:"No response"},
+  {n:"Buncombe County - LEXI Audio Desc.",o:"1207578277",a:51340,t:"newbusiness",r:""},
+  {n:"City of Denton TX - LEXI Audio Desc.",o:"1207578277",a:39168,t:"newbusiness",r:""},
+  {n:"NBCUniversal - CC-Match",o:"97018809",a:33120,t:"existingbusiness",r:""},
+  {n:"Wayne Township NJ - LEXI Audio Desc.",o:"1207578277",a:30240,t:"newbusiness",r:""},
+  {n:"Rothe - Encoder 4K x2 NASA",o:"163838380",a:26090,t:"newbusiness",r:""},
+  {n:"Diversified - HD492 x2 SCETV",o:"584449824",a:23179.5,t:"existingbusiness",r:""},
+  {n:"Rolls Royce - Lexi Block of Hours",o:"584449824",a:17655,t:"newbusiness",r:""},
+  {n:"Twin Oaks Presbyterian Church",o:"584449824",a:17607,t:"newbusiness",r:""},
+];
+
+const P=[
+  {n:"Deloitte - UHD592 + Lexi Local",o:"97018809",a:55000},
+  {n:"Diversified - HD492 x4 US House of Reps",o:"163838380",a:51030},
+  {n:"Human Circuit - Encoder Pro x4 House of Reps",o:"163838380",a:47587.5},
+  {n:"Extreme Reach - ALTA 2110 + Lexi 500",o:"123123099",a:40189.5},
+  {n:"Nylelectronica - HD592 CapEx",o:"123123099",a:39841.2},
+  {n:"Bally's Media - Lexi Unlimited",o:"163659845",a:37125},
+  {n:"Nylelectronica - HD592 OpEx",o:"123123099",a:30865.2},
+  {n:"The University of Toledo - HD592",o:"558345085",a:20000},
+  {n:"Applied Electronics - LEXI Voice",o:"558345085",a:20000},
+  {n:"County Of Kern - LEXI AD",o:"1207578277",a:19440},
+  {n:"Monroe-Woodbury Schools - AltaRTMP",o:"584449824",a:17915},
+  {n:"Matrix Video - LEXI Viewer Langley",o:"558345085",a:18115},
+  {n:"University of Maryland - HD492 Stadium",o:"123123099",a:15233.25},
+  {n:"Montgomery County Gov - HD492",o:"163838380",a:14985},
+  {n:"NCIL - Captioning Conference",o:"220756225",a:14043.75},
+  {n:"Bally's Media - HD1492 iCap",o:"163659845",a:14195},
+  {n:"CBS Television - Lexi Block",o:"584449824",a:13200},
+  {n:"Systems Innovation - HD1492 Google",o:"558345085",a:13171},
+  {n:"Disney/KGOTV - HD492 Replacement",o:"123123099",a:12271.5},
+  {n:"CTI - HD492 Bally's Chicago",o:"163659845",a:11610},
+  {n:"NEP - HD492 NWSL",o:"97018809",a:11610},
+  {n:"CTI - HD1492 Bally's Chicago May26",o:"163659845",a:11015},
+  {n:"The Mob Museum - AV610 + Lexi",o:"123123099",a:10135},
+  {n:"Frederick Community College - HD592",o:"123123099",a:10077.8},
+  {n:"butcher bird Studios - HD592",o:"123123099",a:10075},
+  {n:"NCIL - Remote Captioning",o:"220756225",a:8343.75},
+  {n:"Kiewit - Lexi Block of Hours",o:"584449824",a:8000},
+  {n:"Warner Bros Discovery - Alta Renewals",o:"163659845",a:6200},
+  {n:"Télé-Québec - LEXI Recorded & AD",o:"558345085",a:5000},
+  {n:"Salesforce - AI-Live Events",o:"558345085",a:5000},
+];
+
+const LW=[62880,45130,45034,31547.27,20250,15065,15000,11570,9200,5019];
+const wT=W.reduce((a,d)=>a+d.a,0),lT=L.reduce((a,d)=>a+d.a,0),pT=P.reduce((a,d)=>a+d.a,0),lwT=LW.reduce((a,b)=>a+b,0);
+const wNB=W.filter(d=>d.t==='newbusiness').reduce((a,d)=>a+d.a,0),wEB=W.filter(d=>d.t==='existingbusiness').reduce((a,d)=>a+d.a,0);
+const lNB=L.filter(d=>d.t==='newbusiness').reduce((a,d)=>a+d.a,0),lEB=L.filter(d=>d.t==='existingbusiness').reduce((a,d)=>a+d.a,0);
+const wowP=lwT?Math.round((wT-lwT)/lwT*100):0;
+const net=wT-lT;
+
+document.getElementById('h-w').textContent=ff$(wT);
+document.getElementById('h-l').textContent=ff$(lT);
+document.getElementById('h-p').textContent=ff$(pT);
+
+const row=(d,cls)=>`<div class="di"><div class="dil"><div class="dn">${d.n}</div><div class="dm">${OWN[d.o]||'Other'} <span class="bdg ${d.t==='newbusiness'?'nb':'eb'}">${d.t==='newbusiness'?'New biz':'Existing'}</span>${d.r?` · ${d.r}`:''}</div></div><div class="da ${cls}">${ff$(d.a)}</div></div>`;
+const prow=d=>`<div class="di"><div class="dil"><div class="dn">${d.n}</div><div class="dm">${OWN[d.o]||'Other'}</div></div><div class="da ba">${ff$(d.a)}</div></div>`;
+
+document.getElementById('wc').innerHTML=`
+  <div class="card"><div class="cl">Total wins</div><div class="cv">${ff$(wT)}</div><div class="cs">${W.length} deals · New/Exp only</div></div>
+  <div class="card"><div class="cl">New business</div><div class="cv">${ff$(wNB)}</div><div class="cs">${W.filter(d=>d.t==='newbusiness').length} new-customer deals</div></div>
+  <div class="card"><div class="cl">Existing business</div><div class="cv">${ff$(wEB)}</div><div class="cs">${W.filter(d=>d.t==='existingbusiness').length} current-customer deals</div></div>
+  <div class="card"><div class="cl">Avg deal size</div><div class="cv">${f$(wT/W.length)}</div><div class="cs">filtered deals</div></div>`;
+document.getElementById('wl').innerHTML=[...W].sort((a,b)=>b.a-a.a).map(d=>row(d,'ga')).join('');
+
+document.getElementById('lc').innerHTML=`
+  <div class="card"><div class="cl">Total losses</div><div class="cv">${ff$(lT)}</div><div class="cs">${L.length} deals · ≥$15k</div></div>
+  <div class="card"><div class="cl">New business lost</div><div class="cv">${ff$(lNB)}</div><div class="cs">${L.filter(d=>d.t==='newbusiness').length} deals</div></div>
+  <div class="card"><div class="cl">Existing biz lost</div><div class="cv">${ff$(lEB)}</div><div class="cs">${L.filter(d=>d.t==='existingbusiness').length} deals</div></div>
+  <div class="card"><div class="cl">Largest loss</div><div class="cv">${f$(Math.max(...L.map(d=>d.a)))}</div><div class="cs">City of Austin</div></div>`;
+document.getElementById('ll').innerHTML=[...L].sort((a,b)=>b.a-a.a).map(d=>row(d,'ra')).join('');
+
+document.getElementById('pc').innerHTML=`
+  <div class="card"><div class="cl">New pipeline</div><div class="cv">${ff$(pT)}</div><div class="cs">${P.length} deals this week</div></div>
+  <div class="card"><div class="cl">Avg deal size</div><div class="cv">${f$(pT/P.length)}</div><div class="cs">new opportunities</div></div>
+  <div class="card"><div class="cl">Largest opp.</div><div class="cv">${f$(Math.max(...P.map(d=>d.a)))}</div><div class="cs">Deloitte UHD592</div></div>
+  <div class="card"><div class="cl">Coverage ratio</div><div class="cv">${(pT/wT).toFixed(1)}x</div><div class="cs">pipeline vs wins</div></div>`;
+document.getElementById('pl').innerHTML=[...P].sort((a,b)=>b.a-a.a).map(prow).join('');
+
+document.getElementById('wwc').innerHTML=`
+  <div class="card"><div class="cl">Wins this week</div><div class="cv">${ff$(wT)}</div><div class="cs" style="color:${wowP>=0?'#3dd68c':'#f25c5c'}">${wowP>=0?'+':''}${wowP}% vs last week</div></div>
+  <div class="card"><div class="cl">Wins last week</div><div class="cv">${ff$(lwT)}</div><div class="cs">Apr 27–May 3</div></div>
+  <div class="card"><div class="cl">Losses this week</div><div class="cv" style="color:#f25c5c">${ff$(lT)}</div><div class="cs">${L.length} deals ≥$15k</div></div>
+  <div class="card"><div class="cl">Net (W–L)</div><div class="cv" style="color:${net>=0?'#3dd68c':'#f25c5c'}">${net>=0?'':'-'}${ff$(Math.abs(net))}</div><div class="cs">${net>=0?'positive':'negative'} week</div></div>`;
+
+document.getElementById('sc').innerHTML=`
+  <div class="card"><div class="cl">Wins</div><div class="cv" style="color:#3dd68c">${ff$(wT)}</div><div class="cs">${W.length} deals</div></div>
+  <div class="card"><div class="cl">Losses</div><div class="cv" style="color:#f25c5c">${ff$(lT)}</div><div class="cs">${L.length} deals</div></div>
+  <div class="card"><div class="cl">New pipeline</div><div class="cv" style="color:#4f8ef7">${ff$(pT)}</div><div class="cs">${P.length} deals</div></div>
+  <div class="card"><div class="cl">Net (W–L)</div><div class="cv" style="color:${net>=0?'#3dd68c':'#f25c5c'}">${net>=0?'':'-'}${ff$(Math.abs(net))}</div><div class="cs">${net>=0?'positive':'negative'} week</div></div>`;
+
+const TABS=['w','l','p','r','ww','s'];
+const ini={};
+function show(v){
+  TABS.forEach(x=>{
+    document.getElementById('tab-'+x).classList.toggle('on',x===v);
+    document.getElementById('t-'+x).classList.toggle('on',x===v);
+  });
+  if(v==='r'&&!ini.r){buildReps();ini.r=true;}
+  if(v==='ww'&&!ini.ww){buildWow();ini.ww=true;}
+  if(v==='s'&&!ini.s){buildSum();ini.s=true;}
+}
+
+const chartOpts=(yFn)=>({responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>ff$(c.parsed.y)}}},scales:{x:{grid:{display:false},ticks:{color:'#7a8299',font:{size:11}}},y:{grid:{color:'#ffffff09'},ticks:{color:'#7a8299',font:{size:10},callback:yFn}}}});
+
+function buildReps(){
+  const rW={},rL={};
+  W.forEach(d=>{rW[d.o]=(rW[d.o]||0)+d.a;});
+  L.forEach(d=>{rL[d.o]=(rL[d.o]||0)+d.a;});
+  const names=CORE.map(sn);
+  const yK=v=>'$'+Math.round(v/1000)+'k';
+  new Chart(document.getElementById('cwr'),{type:'bar',data:{labels:names,datasets:[{data:CORE.map(id=>rW[id]||0),backgroundColor:'#3dd68c55',borderColor:'#3dd68c',borderWidth:1,borderRadius:3,borderSkipped:false}]},options:chartOpts(yK)});
+  new Chart(document.getElementById('clr'),{type:'bar',data:{labels:names,datasets:[{data:CORE.map(id=>rL[id]||0),backgroundColor:'#f25c5c55',borderColor:'#f25c5c',borderWidth:1,borderRadius:3,borderSkipped:false}]},options:chartOpts(yK)});
+  document.getElementById('dc').innerHTML=`
+    <div class="card"><div class="cl">New biz wins</div><div class="cv">${ff$(wNB)}</div><div class="cs">${W.filter(d=>d.t==='newbusiness').length} deals</div></div>
+    <div class="card"><div class="cl">Existing biz wins</div><div class="cv">${ff$(wEB)}</div><div class="cs">${W.filter(d=>d.t==='existingbusiness').length} deals</div></div>
+    <div class="card"><div class="cl">New biz losses</div><div class="cv" style="color:#f25c5c">${ff$(lNB)}</div><div class="cs">${L.filter(d=>d.t==='newbusiness').length} deals</div></div>
+    <div class="card"><div class="cl">Existing biz losses</div><div class="cv" style="color:#f25c5c">${ff$(lEB)}</div><div class="cs">${L.filter(d=>d.t==='existingbusiness').length} deals</div></div>`;
+  new Chart(document.getElementById('cdt'),{type:'bar',
+    data:{labels:['New business','Existing business'],datasets:[
+      {label:'Wins',data:[wNB,wEB],backgroundColor:'#3dd68c55',borderColor:'#3dd68c',borderWidth:1,borderRadius:3,borderSkipped:false},
+      {label:'Losses',data:[lNB,lEB],backgroundColor:'#f25c5c55',borderColor:'#f25c5c',borderWidth:1,borderRadius:3,borderSkipped:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${ff$(c.parsed.y)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a8299',font:{size:12}}},y:{grid:{color:'#ffffff09'},ticks:{color:'#7a8299',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}
+  });
+}
+
+function buildWow(){
+  new Chart(document.getElementById('cww'),{type:'bar',
+    data:{labels:['Last week (Apr 27–May 3)','This week (May 4–11)'],datasets:[
+      {label:'Wins',data:[lwT,wT],backgroundColor:'#3dd68c55',borderColor:'#3dd68c',borderWidth:1,borderRadius:3,borderSkipped:false},
+      {label:'Losses',data:[0,lT],backgroundColor:'#f25c5c55',borderColor:'#f25c5c',borderWidth:1,borderRadius:3,borderSkipped:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${ff$(c.parsed.y)}`}}},scales:{x:{grid:{display:false},ticks:{color:'#7a8299',font:{size:12}}},y:{grid:{color:'#ffffff09'},ticks:{color:'#7a8299',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}
+  });
+}
+
+function buildSum(){
+  new Chart(document.getElementById('cs'),{type:'bar',
+    data:{labels:['Wins','Losses','New pipeline'],datasets:[{
+      data:[wT,lT,pT],
+      backgroundColor:['#3dd68c55','#f25c5c55','#4f8ef755'],
+      borderColor:['#3dd68c','#f25c5c','#4f8ef7'],
+      borderWidth:1,borderRadius:4,borderSkipped:false
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>ff$(c.parsed.y)}}},scales:{x:{grid:{display:false},ticks:{color:'#7a8299',font:{size:12}}},y:{grid:{color:'#ffffff09'},ticks:{color:'#7a8299',font:{size:11},callback:v=>'$'+Math.round(v/1000)+'k'}}}}
+  });
+}
+</script>
+</body>
+</html>
