@@ -3,404 +3,232 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AMERICAS Sales — Q4 FY2026 Dashboard</title>
+<title>AMERICAS Sales — Q4 FY2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#0d0f12;--surface:#151820;--border:#ffffff0f;--border2:#ffffff18;
-  --text:#f0f2f5;--muted:#7a8299;--accent:#4f8ef7;
-  --green:#3dd68c;--greenDim:#3dd68c22;
-  --amber:#f5a623;--amberDim:#f5a62322;
-  --red:#f25c5c;--redDim:#f25c5c22;
-}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-.header{padding:28px 40px 20px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--border);}
-.header-left h1{font-size:20px;font-weight:600;letter-spacing:-0.3px;}
-.header-left p{font-size:13px;color:var(--muted);margin-top:3px;}
-.header-right{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);text-align:right;line-height:1.9;}
-.header-right span{color:var(--accent);font-weight:500;}
-.nav{display:flex;gap:2px;padding:0 40px;border-bottom:1px solid var(--border);}
-.nav-tab{font-size:13px;padding:14px 16px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;transition:color .15s;font-family:inherit;}
-.nav-tab:hover{color:var(--text);}
-.nav-tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:500;}
-.content{padding:28px 40px;display:none;}
-.content.active{display:block;}
-.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
-.mc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
-.ml{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
-.mv{font-size:26px;font-weight:600;letter-spacing:-0.5px;line-height:1;}
-.ms{font-size:12px;color:var(--muted);margin-top:6px;}
-.ms.up{color:var(--green);}
-.ms.dn{color:var(--red);}
-.chart-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;}
-.chart-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;font-weight:500;}
-canvas{display:block;width:100%;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:20px;}
-thead th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding:0 10px 10px 0;text-align:left;border-bottom:1px solid var(--border2);}
-thead th:not(:first-child){text-align:right;}
-tbody td{padding:11px 10px 11px 0;border-bottom:1px solid var(--border);vertical-align:middle;}
-tbody td:not(:first-child){text-align:right;}
-tbody tr:last-child td{border-bottom:none;}
-.fw5{font-weight:500;}
-.bar-bg{display:inline-block;width:72px;height:5px;background:var(--border2);border-radius:3px;vertical-align:middle;margin-right:6px;}
-.bar-fg{height:100%;border-radius:3px;}
-.badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:5px;font-weight:500;}
-.bg{background:var(--greenDim);color:var(--green);}
-.ba{background:var(--amberDim);color:var(--amber);}
-.br{background:var(--redDim);color:var(--red);}
-.insight-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;}
-.ic{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
-.iname{font-size:12px;color:var(--muted);margin-bottom:6px;}
-.ival{font-size:15px;font-weight:600;}
-.ival.up{color:var(--green);}
-.ival.dn{color:var(--red);}
-.ival.fl{color:var(--muted);}
-.isub{font-size:11px;color:var(--muted);margin-top:4px;}
-.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
-.li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
-.ls{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
-.footer{padding:16px 40px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;}
-@media(max-width:860px){
-  .header,.nav,.content,.footer{padding-left:16px;padding-right:16px;}
-  .metric-row,.two-col{grid-template-columns:repeat(2,1fr);}
-  .insight-row{grid-template-columns:repeat(2,1fr);}
-}
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;--text:#e6edf3;--text2:#8b949e;--text3:#6e7681;--green:#3fb950;--green-dim:#1a4223;--red:#f85149;--red-dim:#3d1a19;--blue:#58a6ff;--blue-dim:#1c3a5c;--amber:#d29922;--amber-dim:#3d2f0a;--border:#30363d;--font:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;min-height:100vh}
+.header{padding:20px 24px 0;border-bottom:1px solid var(--border)}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.header-title{font-size:18px;font-weight:600;letter-spacing:-.3px}
+.header-sub{font-size:12px;color:var(--text2);margin-top:3px}
+.header-meta{text-align:right;font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.8}
+.header-meta span{color:var(--blue)}
+.tabs{display:flex;padding:0 24px}
+.tab{font-size:12px;font-weight:500;padding:10px 16px;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;transition:all .15s;font-family:var(--font)}
+.tab:hover{color:var(--text)}.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.content{display:none;padding:20px 24px}.content.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px 16px}
+.card-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;font-family:var(--mono)}
+.card-value{font-size:22px;font-weight:600;font-family:var(--mono);color:var(--text)}
+.card-sub{font-size:11px;color:var(--text2);margin-top:4px}.card-sub.up{color:var(--green)}.card-sub.dn{color:var(--red)}
+.chart-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:16px;margin-bottom:16px}
+.chart-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);font-family:var(--mono);margin-bottom:14px}
+.chart-wrap{position:relative;width:100%}
+.legend{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+.legend-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.rep-table{width:100%;border-collapse:collapse;font-size:12px}
+.rep-table th{text-align:left;font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:0 12px 8px 0;border-bottom:1px solid var(--border);font-family:var(--mono)}
+.rep-table th:not(:first-child){text-align:right}
+.rep-table td{padding:8px 12px 8px 0;border-bottom:1px solid var(--border);color:var(--text)}
+.rep-table td:not(:first-child){text-align:right}
+.rep-table tr:last-child td{border-bottom:none}
+.att-bar-wrap{width:90px;height:6px;background:var(--bg4);border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px}
+.att-bar-fill{height:100%;border-radius:3px}
+.badge{font-size:10px;font-weight:600;font-family:var(--mono);padding:2px 7px;border-radius:3px;white-space:nowrap}
+.badge-green{background:var(--green-dim);color:var(--green)}.badge-amber{background:var(--amber-dim);color:var(--amber)}.badge-red{background:var(--red-dim);color:var(--red)}
+.wow-table{width:100%;border-collapse:collapse;font-size:12px}
+.wow-table th{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:0 10px 8px 0;border-bottom:1px solid var(--border);font-family:var(--mono);text-align:left}
+.wow-table th:last-child{text-align:right}
+.wow-table td{padding:7px 10px 7px 0;border-bottom:1px solid var(--border);color:var(--text)}
+.wow-table td:last-child{text-align:right;font-weight:500}
+.wow-table tr:last-child td{border-bottom:none}
+.wow-table a{color:var(--blue);text-decoration:none}.wow-table a:hover{text-decoration:underline}
+.type-new{background:var(--green-dim);color:var(--green);font-size:10px;font-weight:600;font-family:var(--mono);padding:1px 6px;border-radius:3px}
+.type-exp{background:var(--bg3);color:var(--text2);font-size:10px;font-family:var(--mono);padding:1px 6px;border-radius:3px}
+.insight-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-top:16px}
+.insight-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
+.insight-name{font-size:11px;font-weight:500;color:var(--text2);margin-bottom:6px}
+.insight-val{font-size:16px;font-weight:600;font-family:var(--mono);color:var(--text)}
+.insight-sub{font-size:10px;color:var(--text2);margin-top:3px}
+.accel{color:var(--green);font-size:11px;font-weight:600}.decel{color:var(--red);font-size:11px;font-weight:600}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sec-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);font-family:var(--mono);margin:16px 0 10px}
+hr.div{border:none;border-top:1px solid var(--border);margin:20px 0}
+.footer{display:flex;justify-content:space-between;padding:12px 24px;border-top:1px solid var(--border);font-size:10px;font-family:var(--mono);color:var(--text3);margin-top:8px}
+@media(max-width:700px){.cards{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <div class="header">
-  <div class="header-left">
-    <h1>AMERICAS Sales — Q4 FY2026</h1>
-    <p>New / Expansion revenue only &nbsp;·&nbsp; Apr 1 – May 8, 2026</p>
+  <div class="header-top">
+    <div><div class="header-title">AMERICAS Sales — Q4 FY2026</div><div class="header-sub">New / Expansion revenue only &nbsp;·&nbsp; Apr 1 – Jun 30, 2026</div></div>
+    <div class="header-meta">Grand total &nbsp;<span id="hdr-total">—</span><br>Team quota &nbsp;<span>$3,475,000</span><br>Weeks elapsed &nbsp;<span id="hdr-weeks">—</span></div>
   </div>
-  <div class="header-right">
-    Grand total &nbsp;<span>$1,444,715</span><br>
-    Team quota &nbsp;<span>$3,475,000</span><br>
-    Weeks elapsed &nbsp;<span>5.3 / 13</span>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('quota',this)">Quota attainment</button>
+    <button class="tab" onclick="switchTab('wow',this)">Week over week</button>
+    <button class="tab" onclick="switchTab('size',this)">Deal size</button>
+    <button class="tab" onclick="switchTab('momentum',this)">Momentum</button>
   </div>
 </div>
-
-<div class="nav">
-  <button class="nav-tab active" onclick="showTab('att')">Quota attainment</button>
-  <button class="nav-tab" onclick="showTab('wow')">Week over week</button>
-  <button class="nav-tab" onclick="showTab('size')">Deal size</button>
-  <button class="nav-tab" onclick="showTab('mom')">Momentum</button>
-</div>
-
-<div class="content active" id="tab-att">
-  <div class="metric-row">
-    <div class="mc"><div class="ml">Team attainment</div><div class="mv">41.6%</div><div class="ms">of $3.475M quota</div></div>
-    <div class="mc"><div class="ml">Closed to date</div><div class="mv">$1.44M</div><div class="ms">57 deals · Apr 1–May 8</div></div>
-    <div class="mc"><div class="ml">Weekly run rate</div><div class="mv">$272K</div><div class="ms">avg over 5 weeks</div></div>
-    <div class="mc"><div class="ml">Projected Q4</div><div class="mv">101%</div><div class="ms">$3.51M at current pace</div></div>
-  </div>
+<div class="content active" id="tab-quota">
+  <div class="cards" id="quota-cards"></div>
   <div class="two-col">
-    <div class="chart-box"><div class="chart-title">Current attainment %</div><canvas id="c-att" height="240"></canvas></div>
-    <div class="chart-box"><div class="chart-title">Projected attainment at current pace</div><canvas id="c-proj" height="240"></canvas></div>
+    <div class="chart-box"><div class="chart-title">Current attainment %</div><div class="legend"><span class="legend-item"><span class="legend-swatch" style="background:#3fb950"></span>On track (≥55%)</span><span class="legend-item"><span class="legend-swatch" style="background:#d29922"></span>At risk (35–54%)</span><span class="legend-item"><span class="legend-swatch" style="background:#f85149"></span>Behind (&lt;35%)</span></div><div class="chart-wrap" style="height:260px"><canvas id="attChart" role="img" aria-label="Q4 FY2026 quota attainment % by rep"></canvas></div></div>
+    <div class="chart-box"><div class="chart-title">Projected attainment at current pace</div><div class="chart-wrap" style="height:260px"><canvas id="projChart" role="img" aria-label="Projected Q4 attainment by rep"></canvas></div></div>
   </div>
-  <table>
-    <thead><tr><th>Rep</th><th>Closed</th><th>Quota</th><th>Gap</th><th>Attainment</th><th>Projected</th><th>Status</th></tr></thead>
-    <tbody id="att-tbody"></tbody>
-  </table>
+  <div class="chart-box"><table class="rep-table"><thead><tr><th>Rep</th><th>Closed</th><th>Quota</th><th>Gap</th><th>Attainment</th><th>Projected</th><th>Status</th></tr></thead><tbody id="quota-tbody"></tbody></table></div>
 </div>
-
 <div class="content" id="tab-wow">
-  <div class="metric-row">
-    <div class="mc"><div class="ml">This week (May 4)*</div><div class="mv" id="wc">—</div><div class="ms" id="ww">vs prior week</div></div>
-    <div class="mc"><div class="ml">Prior week (Apr 28)</div><div class="mv" id="wp">—</div><div class="ms">baseline</div></div>
-    <div class="mc"><div class="ml">Weekly avg</div><div class="mv" id="wa">—</div><div class="ms">Q4 to date</div></div>
-    <div class="mc"><div class="ml">Q4 total</div><div class="mv">$1.44M</div><div class="ms">New/Expansion only</div></div>
-  </div>
-  <div class="legend">
-    <div class="li"><div class="ls" style="background:#3dd68c"></div>Up WoW</div>
-    <div class="li"><div class="ls" style="background:#f25c5c"></div>Down WoW</div>
-    <div class="li"><div class="ls" style="background:#4f8ef7"></div>Current week (partial)</div>
-  </div>
-  <div class="chart-box"><canvas id="c-wow" height="300"></canvas></div>
+  <div class="cards" id="wow-cards"></div>
+  <div class="legend"><span class="legend-item"><span class="legend-swatch" style="background:#3fb950"></span>Up WoW</span><span class="legend-item"><span class="legend-swatch" style="background:#f85149"></span>Down WoW</span><span class="legend-item"><span class="legend-swatch" style="background:#58a6ff"></span>Current week (partial)</span></div>
+  <div class="chart-box"><div class="chart-title">Weekly closed won revenue · Q4 to date</div><div class="chart-wrap" style="height:280px"><canvas id="wowChart" role="img" aria-label="Weekly closed won Americas Q4"></canvas></div></div>
+  <hr class="div"><div class="sec-label">This week · May 9–15</div>
+  <table class="wow-table"><thead><tr><th>Deal</th><th>Rep</th><th>Type</th><th>Amount</th></tr></thead><tbody id="tw-tbody"></tbody></table>
+  <hr class="div"><div class="sec-label">Prior week · May 2–8</div>
+  <table class="wow-table"><thead><tr><th>Deal</th><th>Rep</th><th>Type</th><th>Amount</th></tr></thead><tbody id="pw-tbody"></tbody></table>
 </div>
-
 <div class="content" id="tab-size">
-  <div class="legend">
-    <div class="li"><div class="ls" style="background:#4f8ef7"></div>&lt;$10k</div>
-    <div class="li"><div class="ls" style="background:#3dd68c"></div>$10k–$50k</div>
-    <div class="li"><div class="ls" style="background:#f5a623"></div>$50k–$100k</div>
-    <div class="li"><div class="ls" style="background:#f25c5c"></div>&gt;$100k</div>
-  </div>
-  <div class="chart-box" style="margin-bottom:20px"><div class="chart-title">Deal count by size bucket</div><canvas id="c-size" height="260"></canvas></div>
-  <div class="insight-row" id="size-ins"></div>
+  <div class="chart-box"><div class="chart-title">Deal count by size bucket</div><div class="legend"><span class="legend-item"><span class="legend-swatch" style="background:#1c3a5c"></span>&lt;$10k</span><span class="legend-item"><span class="legend-swatch" style="background:#1a4223"></span>$10k–$50k</span><span class="legend-item"><span class="legend-swatch" style="background:#3d2f0a"></span>$50k–$100k</span><span class="legend-item"><span class="legend-swatch" style="background:#3d1a19"></span>&gt;$100k</span></div><div class="chart-wrap" style="height:300px"><canvas id="sizeChart" role="img" aria-label="Deal size distribution by rep"></canvas></div></div>
+  <div class="insight-grid" id="size-insights"></div>
 </div>
-
-<div class="content" id="tab-mom">
-  <div class="chart-box" style="margin-bottom:20px"><div class="chart-title">Weekly revenue trend per rep</div><canvas id="c-mom" height="300"></canvas></div>
-  <div class="insight-row" id="mom-ins"></div>
+<div class="content" id="tab-momentum">
+  <div class="chart-box"><div class="chart-title">Weekly revenue trend per rep</div><div class="chart-wrap" style="height:320px"><canvas id="momentumChart" role="img" aria-label="Weekly revenue momentum per rep"></canvas></div></div>
+  <div class="insight-grid" id="momentum-insights"></div>
 </div>
-
-<div class="footer">
-  <span>AMERICAS Sales Pipeline · New/Expansion revenue only · ARR excluded</span>
-  <span>Generated May 8, 2026</span>
-</div>
-
+<div class="footer"><span>AMERICAS Sales · New/Expansion only · revenue_type=New Revenue · pipeline 1558347</span><span>Generated May 18, 2026 &nbsp;·&nbsp; Data through May 15, 2026</span></div>
 <script>
+const Q4_START=new Date('2026-04-01'),Q4_WEEKS=13,TEAM_QUOTA=3475000,NUM_WEEKS=6;
+const WEEK_LABELS=['Apr 6','Apr 13','Apr 20','Apr 27','May 4','May 11'];
 const REPS=[
-  {n:'Michael Kohler',s:'Kohler', r:392342,q:450000,c:8},
-  {n:'Wayne Farenga', s:'Farenga',r:365106,q:550000,c:13},
-  {n:'Tony Graves',   s:'Graves', r:226054,q:550000,c:10},
-  {n:'Jerry Guier',   s:'Guier',  r:161428,q:550000,c:11},
-  {n:'Travis Janssen',s:'Janssen',r:160005,q:550000,c:8},
-  {n:'Russ Newton',   s:'Newton', r:117110,q:425000,c:4},
-  {n:'Ken Blum',      s:'Blum',   r:43235, q:400000,c:3},
+  {id:'1207578277',name:'Michael Kohler',short:'Kohler', quota:450000},
+  {id:'123123099', name:'Wayne Farenga', short:'Farenga',quota:550000},
+  {id:'163659845', name:'Tony Graves',   short:'Graves', quota:550000},
+  {id:'584449824', name:'Jerry Guier',   short:'Guier',  quota:550000},
+  {id:'97018809',  name:'Travis Janssen',short:'Janssen',quota:550000},
+  {id:'558345085', name:'Russ Newton',   short:'Newton', quota:425000},
+  {id:'163838380', name:'Ken Blum',      short:'Blum',   quota:400000},
+  {id:'54689093',  name:'Clare Cawley',  short:'Cawley', quota:0},
+  {id:'2066988811',name:'Lindsay Bairos',short:'Bairos', quota:0},
+  {id:'83571933',  name:'Kaylie Knicely',short:'Knicely',quota:0},
 ];
-const DEALS=[
-  {o:'558345085',d:'2026-04-01',a:42935.05},{o:'163659845',d:'2026-04-01',a:29683},{o:'163659845',d:'2026-04-01',a:14899},
-  {o:'123123099',d:'2026-04-02',a:1200},{o:'123123099',d:'2026-04-02',a:72288},{o:'558345085',d:'2026-04-06',a:10995},
-  {o:'123123099',d:'2026-04-07',a:6000},{o:'123123099',d:'2026-04-08',a:8280},{o:'163838380',d:'2026-04-08',a:22670},
-  {o:'97018809',d:'2026-04-08',a:20250},{o:'97018809',d:'2026-04-09',a:22950},{o:'584449824',d:'2026-04-10',a:18000},
-  {o:'1207578277',d:'2026-04-13',a:35640},{o:'584449824',d:'2026-04-13',a:8685},{o:'1207578277',d:'2026-04-14',a:64800},
-  {o:'163659845',d:'2026-04-14',a:14899},{o:'163659845',d:'2026-04-14',a:11203},{o:'163659845',d:'2026-04-14',a:14899},
-  {o:'163659845',d:'2026-04-14',a:11203},{o:'584449824',d:'2026-04-15',a:18000},{o:'1207578277',d:'2026-04-16',a:28600},
-  {o:'123123099',d:'2026-04-16',a:4080},{o:'584449824',d:'2026-04-17',a:2040},{o:'558345085',d:'2026-04-17',a:18145.6},
-  {o:'1207578277',d:'2026-04-21',a:9936},{o:'584449824',d:'2026-04-22',a:16787.75},{o:'1207578277',d:'2026-04-23',a:185760},
-  {o:'97018809',d:'2026-04-24',a:46740},{o:'97018809',d:'2026-04-24',a:46740},{o:'123123099',d:'2026-04-24',a:2500},
-  {o:'584449824',d:'2026-04-25',a:3300},{o:'558345085',d:'2026-04-27',a:45034},{o:'97018809',d:'2026-04-27',a:20250},
-  {o:'584449824',d:'2026-04-27',a:15065},{o:'123123099',d:'2026-04-28',a:31547.27},{o:'584449824',d:'2026-04-29',a:15000},
-  {o:'163659845',d:'2026-04-29',a:3040},{o:'1207578277',d:'2026-04-30',a:45130},{o:'123123099',d:'2026-05-01',a:62880},
-  {o:'123123099',d:'2026-05-01',a:8935},{o:'123123099',d:'2026-05-04',a:4455},{o:'123123099',d:'2026-05-04',a:6800},
-  {o:'584449824',d:'2026-05-05',a:11475},{o:'123123099',d:'2026-05-05',a:11475},{o:'584449824',d:'2026-05-06',a:24543},
-  {o:'97018809',d:'2026-05-06',a:1035},{o:'97018809',d:'2026-05-06',a:2040},{o:'1207578277',d:'2026-05-06',a:4320},
-  {o:'163659845',d:'2026-05-06',a:3514},{o:'163659845',d:'2026-05-06',a:116113.6},{o:'163838380',d:'2026-05-06',a:12565},
-  {o:'123123099',d:'2026-05-06',a:8935},{o:'163838380',d:'2026-05-06',a:8000},{o:'163659845',d:'2026-05-07',a:6600},
-  {o:'584449824',d:'2026-05-07',a:27500},{o:'123123099',d:'2026-05-07',a:144576},{o:'1207578277',d:'2026-05-07',a:18156},
-  {o:'97018809',d:'2026-05-08',a:400},
+const repById={};REPS.forEach(r=>repById[r.id]=r);
+// Verified vs Excel: $1,608,352.82 · 64 revenue-bearing deals · revenue_type=New Revenue
+const D=[
+  {id:'58474847886',o:'123123099',d:'2026-04-02',a:1200,    n:'Performance Contractors - LEXI Translate 100HR',t:'e'},
+  {id:'57830305050',o:'123123099',d:'2026-04-02',a:72288,   n:'Disney - (2) GEN11 + (6) ALTA2110 PCRD24',t:'e'},
+  {id:'58630632111',o:'123123099',d:'2026-04-07',a:6000,    n:'Performance Contractors - AV610s 3rd Location',t:'e'},
+  {id:'14067994664',o:'123123099',d:'2026-04-08',a:8280,    n:'CatholicTV - Encoder Options',t:'n'},
+  {id:'59171691101',o:'123123099',d:'2026-04-16',a:4080,    n:'Encompass Digital Media - (2) SCTE Add-on',t:'e'},
+  {id:'59158342920',o:'123123099',d:'2026-04-24',a:2500,    n:'Mississippi State University - Lexi 100 Add-on',t:'e'},
+  {id:'59729770842',o:'123123099',d:'2026-04-28',a:31547.27,n:'Nike - AV Icap Int Lic + Support',t:'e'},
+  {id:'59915249979',o:'123123099',d:'2026-05-01',a:62880,   n:'Heartland Video - (6) 1492 + Back Panels HEARST',t:'e'},
+  {id:'59728039231',o:'123123099',d:'2026-05-04',a:4455,    n:'Verendus - HD592 Replace 1492 card',t:'n'},
+  {id:'59812479603',o:'123123099',d:'2026-05-04',a:6800,    n:'Future Grade - Lexi 500 In house',t:'e'},
+  {id:'58634183549',o:'123123099',d:'2026-05-05',a:11475,   n:'Fiber Group - HD492',t:'e'},
+  {id:'59963575347',o:'123123099',d:'2026-05-06',a:8935,    n:'Performance Contractors - AV610 + LEXI TX',t:'e'},
+  {id:'59503422577',o:'123123099',d:'2026-05-07',a:144576,  n:'Disney - (4) Proliant + (12) Alta Lic/Sub',t:'e'},
+  {id:'59609740979',o:'123123099',d:'2026-05-12',a:47152.9, n:'Roberts Communications - (2)1492 + Lexi Dog Racing',t:'n'},
+  {id:'58208379785',o:'163659845',d:'2026-04-01',a:29683,   n:'Sinclair - (8) DE1285 WGFL TV VANC',t:'e'},
+  {id:'58404120105',o:'163659845',d:'2026-04-01',a:14899,   n:'Sinclair - (4) DE1285 WEAR VANC',t:'e'},
+  {id:'59021358242',o:'163659845',d:'2026-04-14',a:14899,   n:'Sinclair - (4) DE1285 WSBT TV VANC',t:'e'},
+  {id:'59018151829',o:'163659845',d:'2026-04-14',a:11203,   n:'Sinclair - (3) DE1285 WHP TV VANC',t:'e'},
+  {id:'59018151713',o:'163659845',d:'2026-04-14',a:14899,   n:'Sinclair - (4) DE1285 KSNV TV VANC',t:'e'},
+  {id:'59021171565',o:'163659845',d:'2026-04-14',a:11203,   n:'Sinclair - (3) DE1285 WTOV TV VANC',t:'e'},
+  {id:'59812190800',o:'163659845',d:'2026-04-29',a:3040,    n:'HVS for KOB A1452 Urgent Order',t:'e'},
+  {id:'57397198932',o:'163659845',d:'2026-05-06',a:3514,    n:'Sinclair - (1) DE1285 WHBQ TV VANC',t:'e'},
+  {id:'60056550144',o:'163659845',d:'2026-05-06',a:116113.6,n:'Sinclair Television - LEXI USAGE Apr Q4 FY26',t:'e'},
+  {id:'59680046765',o:'163659845',d:'2026-05-07',a:6600,    n:'WarnerMedia - Falcon/Lexi May 2026',t:'e'},
+  {id:'57939093122',o:'163659845',d:'2026-05-11',a:3514,    n:'Sinclair - (1) DE1285 KLKN TV VANC',t:'e'},
+  {id:'60039271328',o:'163659845',d:'2026-05-14',a:37125,   n:"Bally's Media - Lexi Unlimited New Channel",t:'e'},
+  {id:'59087102058',o:'584449824',d:'2026-04-10',a:18000,   n:'Phase Engenharia - AV650 Globo',t:'n'},
+  {id:'57938945675',o:'584449824',d:'2026-04-13',a:8685,    n:'NorthPoint Church - Lexi Viewer + Block Hours',t:'n'},
+  {id:'59186356602',o:'584449824',d:'2026-04-15',a:18000,   n:'Phase Engenharia - AV650 Globo Sao Paulo',t:'n'},
+  {id:'59185340168',o:'584449824',d:'2026-04-17',a:2040,    n:'BC Live Productions - SCTE104 Events',t:'e'},
+  {id:'59185239569',o:'584449824',d:'2026-04-22',a:16787.75,n:'APG - HD1492 + Lexi Block Clearwater',t:'n'},
+  {id:'48798733125',o:'584449824',d:'2026-04-25',a:3300,    n:'Brown University - AltaRTMP Yearly/Monthly',t:'n'},
+  {id:'44866041751',o:'584449824',d:'2026-04-27',a:15065,   n:'KSL - Pro HD492 Broadcast',t:'n'},
+  {id:'59419023974',o:'584449824',d:'2026-04-29',a:15000,   n:'KXII Television - Lexi Unlimited Plan',t:'e'},
+  {id:'58295641961',o:'584449824',d:'2026-05-05',a:11475,   n:'Fiber Group - Pro HD492 CBS',t:'e'},
+  {id:'54616142903',o:'584449824',d:'2026-05-06',a:24543,   n:'South Carolina ETV - Pro HD492 (2)',t:'n'},
+  {id:'60076924724',o:'584449824',d:'2026-05-07',a:27500,   n:'KSL - Lexi Unlimited Plan',t:'e'},
+  {id:'60108272701',o:'584449824',d:'2026-05-08',a:15000,   n:'WTVM - Lexi Unlimited Plan',t:'n'},
+  {id:'60177698121',o:'584449824',d:'2026-05-13',a:23480,   n:'BC Live Productions - Pro HD492 (2) Events',t:'e'},
+  {id:'58295616354',o:'584449824',d:'2026-05-13',a:440,     n:'Brown University - Falcon Monthly Events',t:'n'},
+  {id:'58827759028',o:'1207578277',d:'2026-04-13',a:35640,  n:'Office of Legislative Counsel - ALTA RTMP x12',t:'e'},
+  {id:'59157131018',o:'1207578277',d:'2026-04-14',a:64800,  n:'SWAGIT LLC - HD492 Encoder Pro x6',t:'e'},
+  {id:'53806360629',o:'1207578277',d:'2026-04-16',a:28600,  n:'City of Rio Rancho - LEXI LOCAL',t:'n'},
+  {id:'58135992087',o:'1207578277',d:'2026-04-21',a:9936,   n:'City of Denton TX - LEXI Audio Description',t:'n'},
+  {id:'45144586374',o:'1207578277',d:'2026-04-23',a:185760, n:'Diversified - HD492 x16 GA State Legislature',t:'e'},
+  {id:'48535536530',o:'1207578277',d:'2026-04-30',a:45130,  n:'City of Sacramento - HD492 x2 + LEXI Voice',t:'n'},
+  {id:'59273545765',o:'1207578277',d:'2026-05-06',a:4320,   n:'Chandler-Gilbert CC - LEXI RECORDED 20hrs/mo',t:'n'},
+  {id:'52931697023',o:'1207578277',d:'2026-05-07',a:18156,  n:'AVI Systems - Peraton County of San Diego',t:'n'},
+  {id:'59812434993',o:'1207578277',d:'2026-05-15',a:16065,  n:'Key Code Media - HD492 City of Vancouver WA',t:'e'},
+  {id:'54314552115',o:'97018809',  d:'2026-04-08',a:20250,  n:'KSAZ - (2) HD492 Fox O&O',t:'n'},
+  {id:'58134899828',o:'97018809',  d:'2026-04-09',a:22950,  n:'NEP Group - (2) HD492 NWSL',t:'e'},
+  {id:'42100303757',o:'97018809',  d:'2026-04-24',a:46740,  n:'FOX Corporation - (6) Alta 2110 Tempe',t:'e'},
+  {id:'59545554865',o:'97018809',  d:'2026-04-24',a:46740,  n:'FOX Corporation - (6) Alta 2110 Pico',t:'e'},
+  {id:'59610203948',o:'97018809',  d:'2026-04-27',a:20250,  n:'KCPQ - (2) HD492 Fox O&O',t:'n'},
+  {id:'60036788239',o:'97018809',  d:'2026-05-06',a:1035,   n:'Stagedge - Falcon + Lexi 34 May',t:'e'},
+  {id:'59225075863',o:'97018809',  d:'2026-05-06',a:2040,   n:'NEP Group - SCTE-104 Mod',t:'e'},
+  {id:'60019871749',o:'97018809',  d:'2026-05-08',a:400,    n:'University of IL - CaptionCast Commencement',t:'e'},
+  {id:'56896782368',o:'558345085', d:'2026-04-01',a:42935.05,n:'CBC - Alta LEXI Professional Services 2026 Olympics',t:'e'},
+  {id:'58686631439',o:'558345085', d:'2026-04-06',a:10995,  n:'Diversified - HD1492 Google US-MTV-B46',t:'e'},
+  {id:'58798218396',o:'558345085', d:'2026-04-17',a:18145.6,n:'Microsoft - LEXI Text Additional Hours Apr 2026',t:'e'},
+  {id:'43542829996',o:'558345085', d:'2026-04-27',a:45034,  n:'Advanced Systems Group - Alta 2110 Salesforce',t:'e'},
+  {id:'58208758335',o:'163838380', d:'2026-04-08',a:22670,  n:'Washington Prof Systems - Encoder 4K x2 NAWC',t:'e'},
+  {id:'55198122863',o:'163838380', d:'2026-05-06',a:12565,  n:'City of Weston - Encoder Pro HD492 Trade In',t:'n'},
+  {id:'58208852889',o:'163838380', d:'2026-05-06',a:8000,   n:'Daytona Beach - LEXI 500 Block Hours',t:'n'},
+  {id:'50712899342',o:'54689093',  d:'2026-04-21',a:440,    n:'86Forty Productions - Ai-Live LEXI Contentful',t:'n'},
+  {id:'49695323177',o:'54689093',  d:'2026-04-21',a:4436,   n:'Disability Lead - Human CART VRI Summit',t:'e'},
+  {id:'59186215435',o:'2066988811',d:'2026-04-28',a:640,    n:'Butler University - LEXI AI Live',t:'e'},
+  {id:'58479536518',o:'2066988811',d:'2026-04-28',a:5019,   n:'Visual Technologies - HD492 Sub Encoder',t:'e'},
+  {id:'55035071919',o:'2066988811',d:'2026-05-04',a:100,    n:'Berry College - LEXI Hours PAYG',t:'n'},
+  {id:'60019844131',o:'2066988811',d:'2026-05-06',a:400,    n:'VCI EVENTS - CaptionCast Cal State LA',t:'e'},
 ];
-const REP_COLORS=['#4f8ef7','#3dd68c','#a78bfa','#f5a623','#f25c5c','#38bdf8','#fb923c'];
-const APR1=new Date('2026-04-01T00:00:00Z').getTime();
-const WE=5.3,WL=13-WE;
-
-function fmt$(v){return'$'+Math.round(v).toLocaleString();}
-function fmtK(v){return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1000?'$'+Math.round(v/1000)+'k':'$'+Math.round(v);}
-function pct(r){return Math.round(r.r/r.q*100);}
-function projPct(r){return Math.round((r.r+(r.r/WE)*WL)/r.q*100);}
-function bColor(p){return p>=55?'#3dd68c':p>=35?'#f5a623':'#f25c5c';}
-function wkStart(ds){const dt=new Date(ds+'T12:00:00Z'),day=dt.getUTCDay(),diff=dt.getUTCDate()-day+(day===0?-6:1);return new Date(Date.UTC(dt.getUTCFullYear(),dt.getUTCMonth(),diff)).getTime();}
-function fmtW(ts){const d=new Date(ts);return['Jan','Feb','Mar','Apr','May','Jun'][d.getUTCMonth()]+' '+d.getUTCDate();}
-
-function setupCanvas(id,heightPx){
-  const cv=document.getElementById(id);
-  const dpr=window.devicePixelRatio||1;
-  const w=cv.parentElement.clientWidth-40;
-  const h=heightPx;
-  cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
-  cv.style.width=w+'px';cv.style.height=h+'px';
-  const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
-  return{ctx,w,h};
-}
-
-function drawBars(id,heightPx,labels,values,colors,opts){
-  const{ctx,w,h}=setupCanvas(id,heightPx);
-  const pl=54,pr=12,pt=opts.labels?38:14,pb=46;
-  const cw=w-pl-pr,ch=h-pt-pb;
-  const maxV=opts.max||Math.max(...values.map(v=>Math.abs(v)))*1.3||1;
-  const n=labels.length;
-  const slot=cw/n;
-  const bw=Math.min(50,slot*0.65);
-  ctx.clearRect(0,0,w,h);
-  // grid
-  for(let i=0;i<=5;i++){
-    const y=pt+ch*(1-i/5);
-    ctx.strokeStyle='#ffffff09';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(pl,y);ctx.lineTo(pl+cw,y);ctx.stroke();
-    ctx.fillStyle='#7a8299';ctx.font='11px monospace';ctx.textAlign='right';
-    const v=maxV*i/5;
-    ctx.fillText(opts.pct?Math.round(v)+'%':fmtK(v),pl-6,y+4);
-  }
-  // 100% dashed line
-  if(opts.pct&&maxV>100){
-    const y=pt+ch*(1-100/maxV);
-    ctx.strokeStyle='#ffffff25';ctx.lineWidth=1;ctx.setLineDash([4,4]);
-    ctx.beginPath();ctx.moveTo(pl,y);ctx.lineTo(pl+cw,y);ctx.stroke();
-    ctx.setLineDash([]);
-  }
-  values.forEach((v,i)=>{
-    const x=pl+i*slot+(slot-bw)/2;
-    const bh=Math.max(2,ch*(Math.min(v,maxV)/maxV));
-    const y=pt+ch-bh;
-    const c=Array.isArray(colors)?colors[i]:colors;
-    ctx.fillStyle=c;
-    const r=Math.min(4,bw/4);
-    ctx.beginPath();
-    ctx.moveTo(x+r,y);ctx.lineTo(x+bw-r,y);ctx.arcTo(x+bw,y,x+bw,y+r,r);
-    ctx.lineTo(x+bw,y+bh);ctx.lineTo(x,y+bh);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);
-    ctx.closePath();ctx.fill();
-    // value label
-    if(opts.labels){
-      ctx.fillStyle='#e8eaf0';ctx.font='bold 11px monospace';ctx.textAlign='center';
-      ctx.fillText(opts.pct?v+'%':fmtK(v),x+bw/2,y-7);
-    }
-    // x label
-    ctx.fillStyle='#7a8299';ctx.font='11px sans-serif';ctx.textAlign='center';
-    ctx.fillText(labels[i],x+bw/2,h-pb+18);
-  });
-}
-
-function drawStacked(id,heightPx,labels,datasets){
-  const{ctx,w,h}=setupCanvas(id,heightPx);
-  const pl=44,pr=12,pt=14,pb=46;
-  const cw=w-pl-pr,ch=h-pt-pb;
-  const totals=labels.map((_,i)=>datasets.reduce((s,d)=>s+d.data[i],0));
-  const maxV=Math.max(...totals)*1.25||1;
-  const n=labels.length;
-  const slot=cw/n;
-  const bw=Math.min(48,slot*0.6);
-  ctx.clearRect(0,0,w,h);
-  for(let i=0;i<=5;i++){
-    const y=pt+ch*(1-i/5);
-    ctx.strokeStyle='#ffffff09';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(pl,y);ctx.lineTo(pl+cw,y);ctx.stroke();
-    ctx.fillStyle='#7a8299';ctx.font='11px monospace';ctx.textAlign='right';
-    ctx.fillText(Math.round(maxV*i/5),pl-6,y+4);
-  }
-  labels.forEach((_,i)=>{
-    const x=pl+i*slot+(slot-bw)/2;
-    let stackY=pt+ch;
-    datasets.forEach(ds=>{
-      const v=ds.data[i];if(!v)return;
-      const bh=ch*(v/maxV);
-      stackY-=bh;
-      ctx.fillStyle=ds.color;
-      ctx.fillRect(x,stackY,bw,bh);
-    });
-    ctx.fillStyle='#7a8299';ctx.font='11px sans-serif';ctx.textAlign='center';
-    ctx.fillText(labels[i],x+bw/2,h-pb+18);
-  });
-}
-
-function drawLines(id,heightPx,labels,datasets){
-  const{ctx,w,h}=setupCanvas(id,heightPx);
-  const pl=54,pr=90,pt=16,pb=46;
-  const cw=w-pl-pr,ch=h-pt-pb;
-  const allV=datasets.flatMap(d=>d.data);
-  const maxV=Math.max(...allV)*1.2||1;
-  const n=labels.length;
-  const xs=n>1?cw/(n-1):cw;
-  ctx.clearRect(0,0,w,h);
-  for(let i=0;i<=5;i++){
-    const y=pt+ch*(1-i/5);
-    ctx.strokeStyle='#ffffff09';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(pl,y);ctx.lineTo(pl+cw,y);ctx.stroke();
-    ctx.fillStyle='#7a8299';ctx.font='11px monospace';ctx.textAlign='right';
-    ctx.fillText('$'+Math.round(maxV*i/5/1000)+'k',pl-6,y+4);
-  }
-  datasets.forEach(ds=>{
-    ctx.strokeStyle=ds.color;ctx.lineWidth=2;ctx.setLineDash([]);
-    ctx.beginPath();
-    ds.data.forEach((v,i)=>{const x=pl+i*xs,y=pt+ch*(1-v/maxV);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
-    ctx.stroke();
-    ds.data.forEach((v,i)=>{
-      const x=pl+i*xs,y=pt+ch*(1-v/maxV);
-      ctx.fillStyle=ds.color;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
-    });
-  });
-  // x labels
-  ctx.fillStyle='#7a8299';ctx.font='11px sans-serif';ctx.textAlign='center';
-  labels.forEach((l,i)=>ctx.fillText(l,pl+i*xs,h-pb+18));
-  // legend
-  datasets.forEach((ds,i)=>{
-    const ly=pt+i*18;
-    ctx.fillStyle=ds.color;ctx.beginPath();ctx.arc(pl+cw+10,ly+5,4,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#7a8299';ctx.font='11px sans-serif';ctx.textAlign='left';
-    ctx.fillText(ds.label,pl+cw+18,ly+9);
-  });
-}
-
-function getWow(){
-  const wm={};
-  DEALS.forEach(d=>{const ws=wkStart(d.d);if(ws>=APR1)wm[ws]=(wm[ws]||0)+d.a;});
-  const weeks=Object.keys(wm).map(Number).sort();
-  return{weeks,labels:weeks.map(fmtW),vals:weeks.map(w=>wm[w])};
-}
-
-function initAtt(){
-  const s=[...REPS].sort((a,b)=>pct(b)-pct(a));
-  drawBars('c-att',240,s.map(r=>r.s),s.map(r=>pct(r)),s.map(r=>bColor(pct(r))),{pct:true,max:130,labels:true});
-  drawBars('c-proj',240,s.map(r=>r.s),s.map(r=>projPct(r)),s.map(r=>projPct(r)>=100?'#3dd68c99':'#f5a62399'),{pct:true,max:220,labels:true});
-  document.getElementById('att-tbody').innerHTML=s.map(r=>{
-    const p=pct(r),pp=projPct(r),g=r.q-r.r;
-    return`<tr><td class="fw5">${r.n}</td><td>${fmt$(r.r)}</td><td style="color:var(--muted)">${fmt$(r.q)}</td>
-    <td style="color:var(--red)">-${fmt$(g)}</td>
-    <td><div class="bar-bg"><div class="bar-fg" style="width:${Math.min(p,100)}%;background:${bColor(p)}"></div></div>${p}%</td>
-    <td style="color:${pp>=100?'var(--green)':'var(--muted)'}">${pp}%</td>
-    <td><span class="badge ${p>=55?'bg':p>=35?'ba':'br'}">${p>=55?'On track':p>=35?'At risk':'Behind'}</span></td></tr>`;
-  }).join('');
-}
-
-function initWow(){
-  const{weeks,labels,vals}=getWow();
-  const cur=vals[vals.length-1],prev=vals[vals.length-2]||0;
-  const pc=prev?((cur-prev)/prev*100):0;
-  const avg=vals.reduce((a,b)=>a+b)/vals.length;
-  document.getElementById('wc').textContent=fmtK(cur);
-  document.getElementById('wp').textContent=fmtK(prev);
-  document.getElementById('wa').textContent=fmtK(Math.round(avg));
-  const we=document.getElementById('ww');
-  we.textContent=(pc>=0?'+':'')+pc.toFixed(1)+'% vs prior week';
-  we.className='ms '+(pc>=0?'up':'dn');
-  const cols=weeks.map((_,i)=>i===weeks.length-1?'#4f8ef7':vals[i]>=(vals[i-1]??0)?'#3dd68c':'#f25c5c');
-  drawBars('c-wow',300,labels,vals,cols,{labels:true});
-}
-
-function initSize(){
-  const ORD=['1207578277','123123099','163659845','584449824','97018809','558345085','163838380'];
-  const SH=['Kohler','Farenga','Graves','Guier','Janssen','Newton','Blum'];
-  const FN=['Michael Kohler','Wayne Farenga','Tony Graves','Jerry Guier','Travis Janssen','Russ Newton','Ken Blum'];
-  function bkt(a){return a<10000?0:a<50000?1:a<100000?2:3;}
-  const sd=ORD.map(id=>{const d=DEALS.filter(x=>x.o===id),c=[0,0,0,0];d.forEach(x=>c[bkt(x.a)]++);return c;});
-  drawStacked('c-size',260,SH,[
-    {color:'#4f8ef7',data:ORD.map((_,i)=>sd[i][0])},
-    {color:'#3dd68c',data:ORD.map((_,i)=>sd[i][1])},
-    {color:'#f5a623',data:ORD.map((_,i)=>sd[i][2])},
-    {color:'#f25c5c',data:ORD.map((_,i)=>sd[i][3])},
-  ]);
-  const avgD=ORD.map(id=>{const d=DEALS.filter(x=>x.o===id);return d.length?Math.round(d.reduce((a,x)=>a+x.a,0)/d.length):0;});
-  const maxD=ORD.map(id=>Math.max(0,...DEALS.filter(x=>x.o===id).map(x=>x.a)));
-  const bigP=ORD.map(id=>{const d=DEALS.filter(x=>x.o===id);if(!d.length)return 0;return Math.round(d.filter(x=>x.a>=50000).reduce((a,x)=>a+x.a,0)/d.reduce((a,x)=>a+x.a,0)*100);});
-  document.getElementById('size-ins').innerHTML=FN.map((n,i)=>`
-    <div class="ic"><div class="iname">${n}</div><div class="ival">${fmt$(avgD[i])}</div>
-    <div class="isub">avg deal size</div><div class="isub">Max: ${fmt$(maxD[i])}</div>
-    <div class="isub">${bigP[i]}% rev from $50k+</div></div>`).join('');
-}
-
-function initMom(){
-  const ORD=['1207578277','123123099','163659845','584449824','97018809','558345085','163838380'];
-  const SH=['Kohler','Farenga','Graves','Guier','Janssen','Newton','Blum'];
-  const FN=['Michael Kohler','Wayne Farenga','Tony Graves','Jerry Guier','Travis Janssen','Russ Newton','Ken Blum'];
-  const wks=[...new Set(DEALS.map(d=>wkStart(d.d)).filter(w=>w>=APR1))].sort();
-  const labels=wks.map(fmtW);
-  const rw=ORD.map(id=>wks.map(w=>DEALS.filter(d=>d.o===id&&wkStart(d.d)===w).reduce((a,d)=>a+d.a,0)));
-  function slp(arr){const n=arr.length;if(n<2)return 0;const xm=(n-1)/2,ym=arr.reduce((a,b)=>a+b)/n;let nu=0,de=0;arr.forEach((y,i)=>{nu+=(i-xm)*(y-ym);de+=(i-xm)**2;});return de?nu/de:0;}
-  drawLines('c-mom',300,labels,ORD.map((id,i)=>({label:SH[i],color:REP_COLORS[i],data:rw[i]})));
-  const sc=rw.map(w=>slp(w.slice(-3)));
-  document.getElementById('mom-ins').innerHTML=FN.map((n,i)=>{
-    const s=sc[i],dir=s>2000?'up':s<-2000?'dn':'fl';
-    return`<div class="ic"><div class="iname">${n}</div>
-    <div class="ival ${dir}">${s>2000?'↑ Accelerating':s<-2000?'↓ Decelerating':'→ Steady'}</div>
-    <div class="isub">This week: ${fmtK(rw[i][rw[i].length-1])}</div></div>`;
-  }).join('');
-}
-
-const TABS=['att','wow','size','mom'];
-const INITS={att:initAtt,wow:initWow,size:initSize,mom:initMom};
-const done={};
-function showTab(id){
-  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',TABS[i]===id));
-  document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  if(!done[id]){INITS[id]();done[id]=true;}
-}
-initAtt();done.att=true;
-window.addEventListener('resize',()=>Object.keys(done).forEach(id=>{if(done[id])INITS[id]();}));
+function wkOf(d){return Math.max(0,Math.floor((new Date(d)-Q4_START)/(7*86400000)))}
+function fmt(n){if(!n)return'$0';if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(n>=1000)return'$'+Math.round(n/1000)+'k';return'$'+Math.round(n)}
+function fmtF(n){return'$'+Math.round(n||0).toLocaleString()}
+function pct(n,q){return q?Math.round(n/q*100):0}
+const u=id=>`https://app.hubspot.com/contacts/3869869/record/0-3/${id}?utm_source=app_16228553_mcp&utm_medium=ai_agent&utm_campaign=search`;
+function switchTab(id,btn){document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active')}
+const today=new Date('2026-05-18'),wkEl=Math.round((today-Q4_START)/(7*86400000)*10)/10;
+const tots={};REPS.forEach(r=>{tots[r.id]=0});D.forEach(d=>{if(tots[d.o]!==undefined)tots[d.o]+=(d.a||0)});
+const mainR=REPS.filter(r=>r.quota>0);
+const teamC=mainR.reduce((s,r)=>s+(tots[r.id]||0),0);
+const grandT=Object.values(tots).reduce((s,v)=>s+v,0);
+document.getElementById('hdr-total').textContent=fmt(grandT);
+document.getElementById('hdr-weeks').textContent=wkEl.toFixed(1)+' / '+Q4_WEEKS;
+const wkRate=teamC/wkEl,projQ4=wkRate*Q4_WEEKS;
+document.getElementById('quota-cards').innerHTML=`<div class="card"><div class="card-label">Team attainment</div><div class="card-value">${pct(teamC,TEAM_QUOTA)}%</div><div class="card-sub">of $3.475M quota</div></div><div class="card"><div class="card-label">Closed to date</div><div class="card-value">${fmt(teamC)}</div><div class="card-sub">${D.filter(d=>repById[d.o]?.quota>0&&d.a>0).length} deals · Apr 1–May 15</div></div><div class="card"><div class="card-label">Weekly run rate</div><div class="card-value">${fmt(wkRate)}</div><div class="card-sub">avg over ${wkEl.toFixed(1)} weeks</div></div><div class="card"><div class="card-label">Projected Q4</div><div class="card-value">${pct(projQ4,TEAM_QUOTA)}%</div><div class="card-sub">${fmt(projQ4)} at current pace</div></div>`;
+new Chart(document.getElementById('attChart'),{type:'bar',data:{labels:mainR.map(r=>r.short),datasets:[{data:mainR.map(r=>pct(tots[r.id]||0,r.quota)),backgroundColor:mainR.map(r=>{const a=pct(tots[r.id]||0,r.quota);return a>=55?'#3fb950':a>=35?'#d29922':'#f85149'}),borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>v+'%'},max:120}}}});
+new Chart(document.getElementById('projChart'),{type:'bar',data:{labels:mainR.map(r=>r.short),datasets:[{data:mainR.map(r=>pct((tots[r.id]||0)/wkEl*Q4_WEEKS,r.quota)),backgroundColor:mainR.map(r=>{const p=pct((tots[r.id]||0)/wkEl*Q4_WEEKS,r.quota);return p>=100?'#3fb950':p>=70?'#d29922':'#f85149'}),borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>v+'%'},max:250}}}});
+const tb=document.getElementById('quota-tbody');
+mainR.forEach(r=>{const rev=tots[r.id]||0,att=pct(rev,r.quota),gap=Math.max(0,r.quota-rev),proj=pct(rev/wkEl*Q4_WEEKS,r.quota),bc=att>=55?'#3fb950':att>=35?'#d29922':'#f85149';const bdg=proj>=100?'<span class="badge badge-green">On track</span>':proj>=70?'<span class="badge badge-amber">At risk</span>':'<span class="badge badge-red">Behind</span>';tb.innerHTML+=`<tr><td style="font-weight:500">${r.name}</td><td>${fmtF(rev)}</td><td>${fmtF(r.quota)}</td><td>${gap?fmtF(gap):'—'}</td><td><span class="att-bar-wrap"><span class="att-bar-fill" style="width:${Math.min(100,att)}%;background:${bc}"></span></span>${att}%</td><td>${proj}%</td><td>${bdg}</td></tr>`});
+const wkT=Array(NUM_WEEKS).fill(0);D.forEach(d=>{const w=wkOf(d.d);if(w<NUM_WEEKS)wkT[w]+=(d.a||0)});
+const TW=D.filter(d=>d.d>='2026-05-09'&&d.d<='2026-05-15'&&repById[d.o]);
+const PW=D.filter(d=>d.d>='2026-05-02'&&d.d<='2026-05-08'&&repById[d.o]);
+const twT=TW.reduce((s,d)=>s+(d.a||0),0),pwT=PW.reduce((s,d)=>s+(d.a||0),0);
+const wowP=pwT?Math.round((twT-pwT)/pwT*100):0;
+document.getElementById('wow-cards').innerHTML=`<div class="card"><div class="card-label">This week (May 9–15)</div><div class="card-value">${fmt(twT)}</div><div class="card-sub ${wowP>=0?'up':'dn'}">${wowP>=0?'+':''}${wowP}% vs prior week</div></div><div class="card"><div class="card-label">Prior week (May 2–8)</div><div class="card-value">${fmt(pwT)}</div><div class="card-sub">baseline</div></div><div class="card"><div class="card-label">Weekly avg</div><div class="card-value">${fmt(grandT/wkEl)}</div><div class="card-sub">Q4 to date</div></div><div class="card"><div class="card-label">Q4 total</div><div class="card-value">${fmt(grandT)}</div><div class="card-sub">New/Expansion only</div></div>`;
+const bc2=wkT.map((v,i)=>i===NUM_WEEKS-1?'#58a6ff':i===0?'#3fb950':v>=wkT[i-1]?'#3fb950':'#f85149');
+new Chart(document.getElementById('wowChart'),{type:'bar',data:{labels:WEEK_LABELS,datasets:[{data:wkT,backgroundColor:bc2,borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>fmt(v)}}}}});
+const ttb=document.getElementById('tw-tbody');TW.filter(d=>d.a>0).sort((a,b)=>b.a-a.a).forEach(d=>{ttb.innerHTML+=`<tr><td><a href="${u(d.id)}">${d.n}</a></td><td style="color:#8b949e">${repById[d.o]?.short||''}</td><td><span class="${d.t==='n'?'type-new':'type-exp'}">${d.t==='n'?'New':'Expansion'}</span></td><td>${fmtF(d.a)}</td></tr>`});
+const ptb=document.getElementById('pw-tbody');PW.filter(d=>d.a>0).sort((a,b)=>b.a-a.a).forEach(d=>{ptb.innerHTML+=`<tr><td><a href="${u(d.id)}">${d.n}</a></td><td style="color:#8b949e">${repById[d.o]?.short||''}</td><td><span class="${d.t==='n'?'type-new':'type-exp'}">${d.t==='n'?'New':'Expansion'}</span></td><td>${fmtF(d.a)}</td></tr>`});
+const dByR={};REPS.forEach(r=>{dByR[r.id]=[]});D.forEach(d=>{if(dByR[d.o])dByR[d.o].push(d)});
+const bkt=a=>a<10000?0:a<50000?1:a<100000?2:3;
+const sc=mainR.map(r=>{const c=[0,0,0,0];(dByR[r.id]||[]).forEach(d=>{if(d.a>0)c[bkt(d.a)]++});return c});
+new Chart(document.getElementById('sizeChart'),{type:'bar',data:{labels:mainR.map(r=>r.short),datasets:[{label:'<$10k',data:sc.map(c=>c[0]),backgroundColor:'#1c3a5c',stack:'s'},{label:'$10k–$50k',data:sc.map(c=>c[1]),backgroundColor:'#1a4223',stack:'s'},{label:'$50k–$100k',data:sc.map(c=>c[2]),backgroundColor:'#3d2f0a',stack:'s'},{label:'>$100k',data:sc.map(c=>c[3]),backgroundColor:'#3d1a19',stack:'s'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'},stacked:true},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'},stacked:true}}}});
+const si=document.getElementById('size-insights');mainR.forEach(r=>{const ds=(dByR[r.id]||[]).filter(d=>d.a>0);const avg=ds.length?Math.round(ds.reduce((s,d)=>s+d.a,0)/ds.length):0,mx=ds.length?Math.max(...ds.map(d=>d.a)):0;si.innerHTML+=`<div class="insight-card"><div class="insight-name">${r.name}</div><div class="insight-val">${fmtF(avg)}</div><div class="insight-sub">avg deal size · Max: ${fmtF(mx)}</div></div>`});
+const wkM={};REPS.forEach(r=>{wkM[r.id]=Array(NUM_WEEKS).fill(0)});D.forEach(d=>{const w=wkOf(d.d);if(w<NUM_WEEKS&&wkM[d.o])wkM[d.o][w]+=(d.a||0)});
+const CLR=['#58a6ff','#3fb950','#a371f7','#f0883e','#f85149','#79c0ff','#56d364'];
+new Chart(document.getElementById('momentumChart'),{type:'line',data:{labels:WEEK_LABELS,datasets:mainR.map((r,i)=>({label:r.short,data:wkM[r.id],borderColor:CLR[i],backgroundColor:'transparent',borderWidth:2,pointRadius:3,tension:.3}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8b949e',font:{size:11},boxWidth:12}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>fmt(v)}}}}});
+const mi=document.getElementById('momentum-insights');mainR.forEach(r=>{const wk=wkM[r.id],tw=wk[NUM_WEEKS-1]||0,pw=wk[NUM_WEEKS-2]||0,up=tw>=pw;mi.innerHTML+=`<div class="insight-card"><div class="insight-name">${r.name}</div><div class="insight-val ${up?'accel':'decel'}">${up?'↑ Accelerating':'↓ Decelerating'}</div><div class="insight-sub">This week: ${fmt(tw)}</div></div>`});
 </script>
 </body>
 </html>
