@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIM Sales Intelligence</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;
+  --text:#e6edf3;--text2:#8b949e;--text3:#6e7681;
+  --green:#3fb950;--green-dim:#1a4223;
+  --blue:#58a6ff;--blue-dim:#1c3a5c;
+  --amber:#d29922;--amber-dim:#3d2f0a;
+  --purple:#a371f7;--purple-dim:#2d1d4e;
+  --red:#f85149;--red-dim:#3d1a19;
+  --border:#30363d;
+  --font:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;display:flex;flex-direction:column}
+
+/* TOP BAR */
+.topbar{padding:16px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.topbar-brand{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--text);text-transform:uppercase}
+.topbar-brand span{color:var(--blue)}
+.topbar-meta{font-family:var(--mono);font-size:11px;color:var(--text3)}
+
+/* HERO */
+.hero{padding:56px 32px 40px;border-bottom:1px solid var(--border)}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.hero-title{font-size:32px;font-weight:600;letter-spacing:-.5px;line-height:1.2;margin-bottom:10px}
+.hero-sub{font-size:14px;color:var(--text2);line-height:1.6;max-width:520px}
+
+/* QUARTER BADGE */
+.q-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:6px 12px;font-family:var(--mono);font-size:11px;color:var(--text2);margin-top:20px}
+.q-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* DASHBOARD GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border);flex:1}
+.dash-card{background:var(--bg);padding:28px 32px;text-decoration:none;display:flex;flex-direction:column;gap:0;transition:background .15s;position:relative;overflow:hidden}
+.dash-card:hover{background:var(--bg2)}
+.dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .15s}
+.dash-card:hover::before{opacity:1}
+.card-americas::before{background:var(--blue)}
+.card-emea::before{background:var(--amber)}
+.card-apac::before{background:var(--green)}
+.card-coming::before{background:var(--purple)}
+
+.card-region{font-family:var(--mono);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+.card-americas .card-region{color:var(--blue)}
+.card-emea .card-region{color:var(--amber)}
+.card-apac .card-region{color:var(--green)}
+.card-coming .card-region{color:var(--purple)}
+
+.card-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px;letter-spacing:-.2px}
+.card-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px;flex:1}
+
+.card-stats{display:flex;gap:24px;margin-bottom:20px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat-val{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--text)}
+.stat-label{font-size:11px;color:var(--text3)}
+
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border)}
+.card-updated{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.card-link{font-family:var(--mono);font-size:11px;font-weight:500;display:flex;align-items:center;gap:5px;transition:gap .15s}
+.card-americas .card-link{color:var(--blue)}
+.card-emea .card-link{color:var(--amber)}
+.card-apac .card-link{color:var(--green)}
+.card-coming .card-link{color:var(--purple)}
+.dash-card:hover .card-link{gap:9px}
+
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;margin-bottom:16px}
+.pill-live{background:var(--green-dim);color:var(--green)}
+.pill-coming{background:var(--purple-dim);color:var(--purple)}
+
+/* FOOTER */
+.footer{padding:16px 32px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10px;color:var(--text3)}
+
+@media(max-width:640px){
+  .hero{padding:32px 20px 28px}
+  .topbar{padding:14px 20px}
+  .dash-card{padding:24px 20px}
+  .footer{padding:14px 20px;flex-direction:column;gap:6px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">AIM <span>//</span> Sales Intelligence</div>
+  <div class="topbar-meta">Q4 FY2026 &nbsp;·&nbsp; Apr 1 – Jun 30, 2026</div>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Regional dashboards</div>
+  <h1 class="hero-title">Sales Performance Hub</h1>
+  <p class="hero-sub">New &amp; expansion revenue only. Weekly closed won · quota attainment · deal size · momentum. Updated every Monday.</p>
+  <div class="q-badge">
+    <span class="q-badge-dot"></span>
+    Live &nbsp;·&nbsp; Q4 FY2026 &nbsp;·&nbsp; Data through May 15, 2026
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- AMERICAS -->
+  <a class="dash-card card-americas" href="./americas/">
+    <div class="pill pill-live">Live</div>
+    <div class="card-region">Americas</div>
+    <div class="card-title">Americas Sales</div>
+    <div class="card-desc">7-rep quota team · New &amp; expansion revenue · pipeline 1558347 · USD</div>
+    <div class="card-stats">
+      <div class="stat"><span class="stat-val">$1.61M</span><span class="stat-label">Closed to date</span></div>
+      <div class="stat"><span class="stat-val">46%</span><span class="stat-label">Team attainment</span></div>
+      <div class="stat"><span class="stat-val">64</span><span class="stat-label">Deals won</span></div>
+    </div>
+    <div class="card-footer">
+      <span class="card-updated">Updated May 18, 2026</span>
+      <span class="card-link">Open dashboard →</span>
+    </div>
+  </a>
+
+  <!-- EMEA -->
+  <a class="dash-card card-emea" href="./emea/">
+    <div class="pill pill-coming">Coming soon</div>
+    <div class="card-region">EMEA</div>
+    <div class="card-title">EMEA Sales</div>
+    <div class="card-desc">All reps · All revenue types · pipeline 1586769 · GBP / EUR</div>
+    <div class="card-stats">
+      <div class="stat"><span class="stat-val">—</span><span class="stat-label">Closed to date</span></div>
+      <div class="stat"><span class="stat-val">—</span><span class="stat-label">Attainment</span></div>
+      <div class="stat"><span class="stat-val">—</span><span class="stat-label">Deals won</span></div>
+    </div>
+    <div class="card-footer">
+      <span class="card-updated">Not yet published</span>
+      <span class="card-link">Coming soon →</span>
+    </div>
+  </a>
+
+  <!-- APAC -->
+  <a class="dash-card card-apac" href="./apac/">
+    <div class="pill pill-coming">Coming soon</div>
+    <div class="card-region">APAC</div>
+    <div class="card-title">APAC Sales</div>
+    <div class="card-desc">All reps · New revenue · pipeline 1627063 · AUD</div>
+    <div class="card-stats">
+      <div class="stat"><span class="stat-val">—</span><span class="stat-label">Closed to date</span></div>
+      <div class="stat"><span class="stat-val">—</span><span class="stat-label">Attainment</span></div>
+      <div class="stat"><span class="stat-val">—</span><span class="stat-label">Deals won</span></div>
+    </div>
+    <div class="card-footer">
+      <span class="card-updated">Not yet published</span>
+      <span class="card-link">Coming soon →</span>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">
+  <span>AIM Sales Intelligence · Q4 FY2026 · New/Expansion only · ARR excluded</span>
+  <span>Generated May 18, 2026</span>
+</div>
+
+</body>
+</html>
