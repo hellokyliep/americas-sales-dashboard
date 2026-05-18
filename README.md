@@ -1,2 +1,2 @@
-# americas-sales-dashboard
-weekly dashboard updates for americas
+# aim-salesintelligence
+weekly dashboard updates for AI-Media
