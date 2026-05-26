@@ -122,16 +122,12 @@ const ffA=v=>'A$'+(parseFloat(v)||0).toLocaleString('en-AU',{maximumFractionDigi
 const fxNote=(a,c)=>c!=='AUD'&&c?`<span class="fx">${c} ${parseFloat(a).toLocaleString('en-AU',{maximumFractionDigits:0})} → ${ffA(toA(a,c))}</span>`:'';
 const hsUrl=id=>`https://app.hubspot.com/contacts/3869869/record/0-3/${id}?utm_source=apac_weekly`;
 
-// ── NEW PIPELINE (May 19-25) ──────────────────────────────────────────────────
+// ── NEW PIPELINE (May 19-25) · A$1,000 floor applied ─────────────────────────
 const P=[
-  {id:'60486767624',n:'CJ OliveNetworks - HD492 + Lexi Translate - Live Streaming',               o:'1957240219',a:29600,c:'USD'},
-  {id:'60524969075',n:'CGN - Products - Project/Event',                                            o:'1957240219',a:24500,c:'USD'},
-  {id:'60424081228',n:'Proace/TV5 - HD592 - Convert to HaaS with HD492 Trade-In',                 o:'44783332',  a:2010, c:'USD'},
-  {id:'60355668837',n:'University of New South Wales - Live Captions (CART) - DIAP Launch Event', o:'36905767',  a:755,  c:'AUD'},
-  {id:'60355608191',n:'Orens Capital - LEXI via Ai-Live with Translation - 21/05/2026',           o:'36905767',  a:620,  c:'AUD'},
-  {id:'60420037188',n:'StoryBox Hub - LEXI Recorded Translation - EduGrowth POC 2026',            o:'36905767',  a:200,  c:'AUD'},
-  {id:'60355548556',n:'StoryBox Hub - LEXI Recorded + Translate - Luna Roo',                      o:'36905767',  a:45,   c:'AUD'},
-];
+  {id:'60486767624',n:'CJ OliveNetworks - HD492 + Lexi Translate - Live Streaming', o:'1957240219',a:29600,c:'USD'},
+  {id:'60524969075',n:'CGN - Products - Project/Event',                              o:'1957240219',a:24500,c:'USD'},
+  {id:'60424081228',n:'Proace/TV5 - HD592 - Convert to HaaS with HD492 Trade-In',   o:'44783332',  a:2010, c:'USD'},
+].filter(d=>toA(d.a,d.c)>=1000);
 
 // ── PRIOR WEEK CLOSES (May 12-18) — for WoW comparison ───────────────────────
 const PW_TOTAL = 34481.73; // Sum of all prior week closes in AUD
@@ -190,6 +186,7 @@ const QTD_RAW=[
 const QTD = QTD_RAW.map(d=>({...d,aud:toA(d.a,d.c)}));
 const QTD_SHOW = QTD.filter(d=>d.aud>=1000);
 const qtdTotal = QTD.reduce((s,d)=>s+d.aud,0);
+
 const pT=P.reduce((s,d)=>s+toA(d.a,d.c),0);
 
 // This week closes (May 19-25)
