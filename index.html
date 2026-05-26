@@ -9,206 +9,107 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --bg:#0d0f12;--sur:#151820;--sur2:#1c2130;--bor:#ffffff10;--bor2:#ffffff18;
-  --txt:#f0f2f5;--mut:#7a8299;--acc:#4f8ef7;--grn:#3dd68c;--red:#f25c5c;--amber:#f59e0b;
+  --txt:#f0f2f5;--mut:#7a8299;--acc:#4f8ef7;--grn:#3dd68c;--red:#f25c5c;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;}
- 
-/* ── Top nav ── */
-.topnav{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 40px;height:52px;
-  background:var(--sur);border-bottom:1px solid var(--bor);
-  position:sticky;top:0;z-index:100;
-}
-.topnav-logo{
-  font-family:'DM Mono',monospace;font-size:13px;font-weight:500;
-  color:var(--txt);text-decoration:none;letter-spacing:.02em;
-  display:flex;align-items:center;gap:10px;
-}
-.topnav-logo-mark{
-  width:22px;height:22px;background:linear-gradient(135deg,#4f8ef7,#a78bfa);
-  border-radius:5px;display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:700;color:#fff;flex-shrink:0;
-}
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:52px;background:var(--sur);border-bottom:1px solid var(--bor);position:sticky;top:0;z-index:100;}
+.topnav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--txt);text-decoration:none;display:flex;align-items:center;gap:10px;}
+.topnav-logo-mark{width:22px;height:22px;background:linear-gradient(135deg,#4f8ef7,#a78bfa);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
 .topnav-links{display:flex;gap:2px;}
-.topnav-link{
-  font-size:13px;font-weight:500;color:var(--mut);text-decoration:none;
-  padding:6px 14px;border-radius:6px;transition:all .15s;
-  display:flex;align-items:center;gap:6px;
-}
+.topnav-link{font-size:13px;font-weight:500;color:var(--mut);text-decoration:none;padding:6px 14px;border-radius:6px;transition:all .15s;display:flex;align-items:center;gap:6px;}
 .topnav-link:hover{color:var(--txt);background:var(--sur2);}
 .topnav-link.active{color:var(--txt);background:var(--sur2);}
-.topnav-link .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.dot-live{background:var(--grn);box-shadow:0 0 6px rgba(61,214,140,.6);}
-.dot-soon{background:var(--mut);}
-.topnav-link .region-label{font-family:'DM Mono',monospace;font-size:11px;}
- 
-/* ── Main ── */
+.nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dot-am{background:var(--grn);box-shadow:0 0 5px rgba(61,214,140,.5);}
+.dot-ap{background:#00d4ff;box-shadow:0 0 5px rgba(0,212,255,.5);}
+.topnav-soon{font-size:13px;font-weight:500;color:var(--mut);padding:6px 14px;display:flex;align-items:center;gap:6px;}
 .main{flex:1;padding:48px 40px 60px;max-width:860px;width:100%;margin:0 auto;}
- 
 .page-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
 .page-title{font-size:28px;font-weight:600;letter-spacing:-.4px;margin-bottom:6px;}
 .page-sub{font-size:14px;color:var(--mut);margin-bottom:36px;}
- 
-/* ── Region cards ── */
 .regions{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
-.region-card{
-  background:var(--sur);border:1px solid var(--bor);border-radius:14px;
-  padding:22px 24px;text-decoration:none;color:var(--txt);
-  display:flex;flex-direction:column;gap:0;
-  transition:border-color .2s,background .2s;
-  position:relative;overflow:hidden;
-}
-.region-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--bor);transition:background .2s;
-}
-.region-card.live::before{background:var(--grn);}
-.region-card.live-apac::before{background:#00d4ff;}
+.region-card{background:var(--sur);border:1px solid var(--bor);border-radius:14px;padding:22px 24px;text-decoration:none;color:var(--txt);display:flex;flex-direction:column;transition:border-color .2s,background .2s;position:relative;overflow:hidden;}
+.region-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.region-card.live-am::before{background:var(--grn);}
+.region-card.live-ap::before{background:#00d4ff;}
 .region-card.soon::before{background:var(--mut);}
 .region-card:hover{border-color:var(--bor2);background:var(--sur2);}
-.region-card.live:hover::before{background:var(--grn);}
-.region-card.live-apac:hover::before{background:#00d4ff;}
- 
+.region-card.soon{cursor:default;}
+.region-card.soon:hover{border-color:var(--bor);background:var(--sur);}
 .rc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .rc-region{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--mut);letter-spacing:.06em;}
 .rc-badge{font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;font-weight:500;}
-.badge-live{background:rgba(61,214,140,.12);color:var(--grn);border:1px solid rgba(61,214,140,.25);}
-.badge-live-apac{background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.2);}
+.badge-am{background:rgba(61,214,140,.12);color:var(--grn);border:1px solid rgba(61,214,140,.25);}
+.badge-ap{background:rgba(0,212,255,.1);color:#00d4ff;border:1px solid rgba(0,212,255,.2);}
 .badge-soon{background:rgba(122,130,153,.1);color:var(--mut);border:1px solid var(--bor);}
- 
 .rc-name{font-size:16px;font-weight:600;margin-bottom:4px;}
 .rc-desc{font-size:12px;color:var(--mut);margin-bottom:18px;line-height:1.5;}
- 
 .rc-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px;}
 .rc-stat-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;color:var(--txt);line-height:1;}
 .rc-stat-val.dim{color:var(--mut);}
 .rc-stat-label{font-size:11px;color:var(--mut);margin-top:3px;}
- 
 .rc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--bor);}
 .rc-updated{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut);}
-.rc-cta{font-size:12px;font-weight:500;color:var(--acc);display:flex;align-items:center;gap:4px;}
-.region-card.soon .rc-cta{color:var(--mut);}
- 
-/* ── Info strip ── */
-.info-strip{
-  display:flex;gap:24px;padding:16px 20px;
-  background:var(--sur);border:1px solid var(--bor);border-radius:10px;
-  font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);
-  flex-wrap:wrap;
-}
+.rc-cta{font-size:12px;font-weight:500;color:var(--acc);}
+.rc-cta.dim{color:var(--mut);}
+.info-strip{display:flex;gap:24px;padding:16px 20px;background:var(--sur);border:1px solid var(--bor);border-radius:10px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);flex-wrap:wrap;}
 .info-item strong{color:var(--txt);font-weight:500;}
- 
-/* ── Footer ── */
-.footer{
-  padding:14px 40px;border-top:1px solid var(--bor);
-  font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);
-  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
-}
- 
-@media(max-width:700px){
-  .topnav{padding:0 16px;}
-  .main{padding:28px 16px 48px;}
-  .regions{grid-template-columns:1fr;}
-  .footer{padding:12px 16px;}
-  .topnav-link .region-label{display:none;}
-}
+.footer{padding:14px 40px;border-top:1px solid var(--bor);font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+@media(max-width:700px){.topnav{padding:0 16px;}.main{padding:28px 16px 48px;}.regions{grid-template-columns:1fr;}.footer{padding:12px 16px;}}
 </style>
 </head>
 <body>
- 
-<!-- ── Sticky top nav ── -->
 <nav class="topnav">
   <a class="topnav-logo" href="/aim-salesintelligence/">
     <div class="topnav-logo-mark">AI</div>
     AIM // Sales Intelligence
   </a>
   <div class="topnav-links">
-    <a class="topnav-link active" href="/aim-salesintelligence/">
-      <span class="region-label">Hub</span>
-    </a>
-    <a class="topnav-link" href="/aim-salesintelligence/americas/">
-      <span class="dot dot-live"></span>
-      <span class="region-label">Americas</span>
-    </a>
-    <a class="topnav-link" href="/aim-salesintelligence/apac/">
-      <span class="dot dot-live" style="background:#00d4ff;box-shadow:0 0 6px rgba(0,212,255,.6)"></span>
-      <span class="region-label">APAC</span>
-    </a>
-    <a class="topnav-link" href="/aim-salesintelligence/emea/">
-      <span class="dot dot-soon"></span>
-      <span class="region-label">EMEA</span>
-    </a>
+    <a class="topnav-link active" href="/aim-salesintelligence/">Hub</a>
+    <a class="topnav-link" href="/aim-salesintelligence/americas/"><span class="nav-dot dot-am"></span>Americas</a>
+    <a class="topnav-link" href="/aim-salesintelligence/apac/"><span class="nav-dot dot-ap"></span>APAC</a>
+    <span class="topnav-soon">EMEA · Coming Soon</span>
   </div>
 </nav>
- 
-<!-- ── Main content ── -->
 <main class="main">
   <div class="page-label">Q4 FY2026 · Apr 1 – Jun 30, 2026</div>
   <h1 class="page-title">Sales Performance Hub</h1>
   <p class="page-sub">New &amp; expansion revenue only &nbsp;·&nbsp; Weekly closed won · quota attainment · deal size · momentum &nbsp;·&nbsp; Updated every Monday</p>
- 
   <div class="regions">
- 
-    <!-- Americas -->
-    <a class="region-card live" href="/aim-salesintelligence/americas/">
-      <div class="rc-header">
-        <span class="rc-region">AMERICAS</span>
-        <span class="rc-badge badge-live">● Live</span>
-      </div>
+    <a class="region-card live-am" href="/aim-salesintelligence/americas/">
+      <div class="rc-header"><span class="rc-region">AMERICAS</span><span class="rc-badge badge-am">● Live</span></div>
       <div class="rc-name">Americas Sales</div>
       <div class="rc-desc">7-rep quota team · New &amp; expansion revenue · pipeline 1558347 · USD</div>
       <div class="rc-stats">
-        <div><div class="rc-stat-val">$1.61M</div><div class="rc-stat-label">Closed to date</div></div>
-        <div><div class="rc-stat-val">46%</div><div class="rc-stat-label">Team attainment</div></div>
-        <div><div class="rc-stat-val">64</div><div class="rc-stat-label">Deals won</div></div>
+        <div><div class="rc-stat-val">$1.76M</div><div class="rc-stat-label">Closed to date</div></div>
+        <div><div class="rc-stat-val">51%</div><div class="rc-stat-label">Team attainment</div></div>
+        <div><div class="rc-stat-val">70</div><div class="rc-stat-label">Deals won</div></div>
       </div>
-      <div class="rc-footer">
-        <span class="rc-updated">Updated May 18, 2026</span>
-        <span class="rc-cta">Open dashboard →</span>
-      </div>
+      <div class="rc-footer"><span class="rc-updated">Updated May 25, 2026</span><span class="rc-cta">Open dashboard →</span></div>
     </a>
- 
-    <!-- APAC -->
-    <a class="region-card live-apac" href="/aim-salesintelligence/apac/">
-      <div class="rc-header">
-        <span class="rc-region">APAC</span>
-        <span class="rc-badge badge-live-apac">● Live</span>
-      </div>
+    <a class="region-card live-ap" href="/aim-salesintelligence/apac/">
+      <div class="rc-header"><span class="rc-region">APAC</span><span class="rc-badge badge-ap">● Live</span></div>
       <div class="rc-name">APAC Sales</div>
-      <div class="rc-desc">6 reps · New/expansion revenue · pipeline 1627063 · AUD</div>
+      <div class="rc-desc">5 reps · New/expansion revenue · pipeline 1627063 · AUD</div>
       <div class="rc-stats">
-        <div><div class="rc-stat-val">A$240K</div><div class="rc-stat-label">Closed to date</div></div>
-        <div><div class="rc-stat-val">6</div><div class="rc-stat-label">Reps active</div></div>
-        <div><div class="rc-stat-val">10</div><div class="rc-stat-label">Deals ≥A$5k</div></div>
+        <div><div class="rc-stat-val">A$321K</div><div class="rc-stat-label">Closed to date</div></div>
+        <div><div class="rc-stat-val">45</div><div class="rc-stat-label">Deals won</div></div>
+        <div><div class="rc-stat-val">29</div><div class="rc-stat-label">Deals ≥A$1k</div></div>
       </div>
-      <div class="rc-footer">
-        <span class="rc-updated">Updated May 25, 2026</span>
-        <span class="rc-cta">Open dashboard →</span>
-      </div>
+      <div class="rc-footer"><span class="rc-updated">Updated May 26, 2026</span><span class="rc-cta">Open dashboard →</span></div>
     </a>
- 
-<!-- EMEA -->
-<a class="region-card live-apac" href="/aim-salesintelligence/emea/">
-  <div class="rc-header">
-    <span class="rc-region">EMEA</span>
-    <span class="rc-badge badge-live-apac">● Preview</span>
+    <div class="region-card soon">
+      <div class="rc-header"><span class="rc-region">EMEA</span><span class="rc-badge badge-soon">Coming Soon</span></div>
+      <div class="rc-name">EMEA Sales</div>
+      <div class="rc-desc">All reps · New/expansion revenue · pipeline 1586769 · GBP / EUR</div>
+      <div class="rc-stats">
+        <div><div class="rc-stat-val dim">—</div><div class="rc-stat-label">Closed to date</div></div>
+        <div><div class="rc-stat-val dim">—</div><div class="rc-stat-label">Attainment</div></div>
+        <div><div class="rc-stat-val dim">—</div><div class="rc-stat-label">Deals won</div></div>
+      </div>
+      <div class="rc-footer"><span class="rc-updated">Not yet published</span><span class="rc-cta dim">Coming soon</span></div>
+    </div>
   </div>
-  <div class="rc-name">EMEA Sales</div>
-  <div class="rc-desc">VP review · New/expansion revenue · pipeline 1586769 · AUD</div>
-  <div class="rc-stats">
-    <div><div class="rc-stat-val dim">—</div><div class="rc-stat-label">Closed to date</div></div>
-    <div><div class="rc-stat-val dim">—</div><div class="rc-stat-label">Attainment</div></div>
-    <div><div class="rc-stat-val dim">—</div><div class="rc-stat-label">Deals won</div></div>
-  </div>
-  <div class="rc-footer">
-    <span class="rc-updated">Preview · May 25, 2026</span>
-    <span class="rc-cta">Open preview →</span>
-  </div>
-</a>
- 
-  </div>
- 
   <div class="info-strip">
     <div class="info-item"><strong>Methodology</strong> &nbsp;New &amp; expansion revenue only · ARR renewals excluded</div>
     <div class="info-item"><strong>Cadence</strong> &nbsp;Updated every Monday · data through prior Sunday</div>
@@ -216,11 +117,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-
     <div class="info-item"><strong>Period</strong> &nbsp;Q4 FY2026 · Apr 1 – Jun 30, 2026</div>
   </div>
 </main>
- 
 <footer class="footer">
   <span>AIM Sales Intelligence · Q4 FY2026 · New/Expansion only · ARR excluded</span>
-  <span>Generated May 25, 2026</span>
+  <span>Generated May 26, 2026</span>
 </footer>
- 
 </body>
 </html>
