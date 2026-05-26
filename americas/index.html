@@ -3,232 +3,545 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AMERICAS Sales — Q4 FY2026</title>
+<title>Americas — Weekly Snapshot — May 19–25, 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;--text:#e6edf3;--text2:#8b949e;--text3:#6e7681;--green:#3fb950;--green-dim:#1a4223;--red:#f85149;--red-dim:#3d1a19;--blue:#58a6ff;--blue-dim:#1c3a5c;--amber:#d29922;--amber-dim:#3d2f0a;--border:#30363d;--font:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace}
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;min-height:100vh}
-.header{padding:20px 24px 0;border-bottom:1px solid var(--border)}
-.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
-.header-title{font-size:18px;font-weight:600;letter-spacing:-.3px}
-.header-sub{font-size:12px;color:var(--text2);margin-top:3px}
-.header-meta{text-align:right;font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.8}
-.header-meta span{color:var(--blue)}
-.tabs{display:flex;padding:0 24px}
-.tab{font-size:12px;font-weight:500;padding:10px 16px;cursor:pointer;border:none;background:none;color:var(--text2);border-bottom:2px solid transparent;transition:all .15s;font-family:var(--font)}
-.tab:hover{color:var(--text)}.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
-.content{display:none;padding:20px 24px}.content.active{display:block}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px 16px}
-.card-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;font-family:var(--mono)}
-.card-value{font-size:22px;font-weight:600;font-family:var(--mono);color:var(--text)}
-.card-sub{font-size:11px;color:var(--text2);margin-top:4px}.card-sub.up{color:var(--green)}.card-sub.dn{color:var(--red)}
-.chart-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:16px;margin-bottom:16px}
-.chart-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);font-family:var(--mono);margin-bottom:14px}
-.chart-wrap{position:relative;width:100%}
-.legend{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
-.legend-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.rep-table{width:100%;border-collapse:collapse;font-size:12px}
-.rep-table th{text-align:left;font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:0 12px 8px 0;border-bottom:1px solid var(--border);font-family:var(--mono)}
-.rep-table th:not(:first-child){text-align:right}
-.rep-table td{padding:8px 12px 8px 0;border-bottom:1px solid var(--border);color:var(--text)}
-.rep-table td:not(:first-child){text-align:right}
-.rep-table tr:last-child td{border-bottom:none}
-.att-bar-wrap{width:90px;height:6px;background:var(--bg4);border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px}
-.att-bar-fill{height:100%;border-radius:3px}
-.badge{font-size:10px;font-weight:600;font-family:var(--mono);padding:2px 7px;border-radius:3px;white-space:nowrap}
-.badge-green{background:var(--green-dim);color:var(--green)}.badge-amber{background:var(--amber-dim);color:var(--amber)}.badge-red{background:var(--red-dim);color:var(--red)}
-.wow-table{width:100%;border-collapse:collapse;font-size:12px}
-.wow-table th{font-size:10px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:0 10px 8px 0;border-bottom:1px solid var(--border);font-family:var(--mono);text-align:left}
-.wow-table th:last-child{text-align:right}
-.wow-table td{padding:7px 10px 7px 0;border-bottom:1px solid var(--border);color:var(--text)}
-.wow-table td:last-child{text-align:right;font-weight:500}
-.wow-table tr:last-child td{border-bottom:none}
-.wow-table a{color:var(--blue);text-decoration:none}.wow-table a:hover{text-decoration:underline}
-.type-new{background:var(--green-dim);color:var(--green);font-size:10px;font-weight:600;font-family:var(--mono);padding:1px 6px;border-radius:3px}
-.type-exp{background:var(--bg3);color:var(--text2);font-size:10px;font-family:var(--mono);padding:1px 6px;border-radius:3px}
-.insight-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-top:16px}
-.insight-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:12px 14px}
-.insight-name{font-size:11px;font-weight:500;color:var(--text2);margin-bottom:6px}
-.insight-val{font-size:16px;font-weight:600;font-family:var(--mono);color:var(--text)}
-.insight-sub{font-size:10px;color:var(--text2);margin-top:3px}
-.accel{color:var(--green);font-size:11px;font-weight:600}.decel{color:var(--red);font-size:11px;font-weight:600}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.sec-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);font-family:var(--mono);margin:16px 0 10px}
-hr.div{border:none;border-top:1px solid var(--border);margin:20px 0}
-.footer{display:flex;justify-content:space-between;padding:12px 24px;border-top:1px solid var(--border);font-size:10px;font-family:var(--mono);color:var(--text3);margin-top:8px}
-@media(max-width:700px){.cards{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0d0f12;--sur:#151820;--sur2:#1c2130;--bor:#ffffff12;--bor2:#ffffff1e;
+  --txt:#f0f2f5;--mut:#8a93a8;--acc:#4f8ef7;--grn:#3dd68c;--red:#f25c5c;--amber:#f59e0b;
+}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:15px;}
+
+/* ── Top nav ── */
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:50px;background:var(--sur);border-bottom:1px solid var(--bor);position:sticky;top:0;z-index:100;}
+.topnav-logo{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.topnav-logo-mark{width:20px;height:20px;background:linear-gradient(135deg,#4f8ef7,#a78bfa);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;}
+.topnav-links{display:flex;gap:2px;}
+.topnav-link{font-size:13px;font-weight:500;color:var(--mut);text-decoration:none;padding:5px 12px;border-radius:6px;transition:all .15s;display:flex;align-items:center;gap:5px;}
+.topnav-link:hover{color:var(--txt);background:var(--sur2);}
+.topnav-link.active{color:var(--grn);background:var(--sur2);}
+.nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dot-am{background:var(--grn);box-shadow:0 0 5px rgba(61,214,140,.5);}
+.dot-ap{background:#00d4ff;box-shadow:0 0 5px rgba(0,212,255,.5);}
+.dot-em{background:var(--mut);}
+
+/* ── Header ── */
+.hdr{padding:24px 48px 18px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--bor);}
+.hdr h1{font-size:20px;font-weight:600;letter-spacing:-.3px;}
+.hdr p{font-size:13px;color:var(--mut);margin-top:4px;}
+.hdr-r{font-family:'DM Mono',monospace;font-size:13px;color:var(--mut);text-align:right;line-height:2.1;}
+.hdr-r span{color:var(--acc);font-weight:500;}
+
+/* ── Tabs ── */
+.nav{display:flex;padding:0 48px;border-bottom:1px solid var(--bor);flex-wrap:wrap;}
+.tab{font-size:14px;padding:13px 18px;cursor:pointer;color:var(--mut);background:none;border:none;border-bottom:2px solid transparent;font-family:inherit;transition:color .15s;}
+.tab:hover{color:var(--txt);}
+.tab.on{color:var(--txt);border-bottom-color:var(--acc);font-weight:500;}
+.tab.qtd-tab.on{border-bottom-color:#a78bfa;color:#c4b5fd;}
+.ct{padding:32px 48px;display:none;}
+.ct.on{display:block;}
+
+/* ── Cards ── */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.card{background:var(--sur);border:1px solid var(--bor);border-radius:12px;padding:18px 20px;}
+.cl{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px;font-family:'DM Mono',monospace;}
+.cv{font-size:26px;font-weight:600;letter-spacing:-.5px;line-height:1;}
+.cs{font-size:13px;color:var(--mut);margin-top:6px;}
+
+/* ── Deal rows ── */
+.dl{display:flex;flex-direction:column;gap:8px;}
+.di{background:#181e2c;border:1px solid var(--bor);border-radius:11px;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:border-color .15s;}
+.di:hover{border-color:var(--bor2);}
+.dil{flex:1;min-width:0;}
+.dn{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.dm{font-size:12px;color:var(--mut);margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.da-r{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.da{font-size:15px;font-weight:600;white-space:nowrap;font-family:'DM Mono',monospace;}
+.hs-link{font-size:11px;color:var(--mut);text-decoration:none;font-family:'DM Mono',monospace;border:1px solid var(--bor);padding:3px 8px;border-radius:5px;transition:color .15s,border-color .15s;}
+.hs-link:hover{color:var(--acc);border-color:var(--acc);}
+.ga{color:#3dd68c;}.ra{color:#f25c5c;}.ba{color:#4f8ef7;}.va{color:#a78bfa;}
+.bdg{font-size:11px;padding:2px 8px;border-radius:5px;font-weight:500;font-family:'DM Mono',monospace;white-space:nowrap;}
+.nb{background:#0c447c33;color:#5fa8ff;}.eb{background:#2a2a2833;color:#999790;}
+
+/* ── Charts ── */
+.cw{position:relative;width:100%;height:260px;margin-bottom:24px;}
+.cws{position:relative;width:100%;height:200px;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:26px;}
+.sh{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin:0 0 12px;font-family:'DM Mono',monospace;}
+.sec-hd{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;font-family:'DM Mono',monospace;margin:28px 0 12px;padding-top:20px;border-top:1px solid var(--bor);}
+.none{font-size:14px;color:var(--mut);padding:28px 0;font-family:'DM Mono',monospace;}
+
+/* ── Quota attainment table ── */
+.att-table{width:100%;border-collapse:collapse;margin-bottom:28px;}
+.att-table th{font-family:'DM Mono',monospace;font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.07em;padding:0 12px 10px 0;border-bottom:1px solid var(--bor);text-align:left;}
+.att-table th:not(:first-child){text-align:right;}
+.att-table td{padding:10px 12px 10px 0;border-bottom:1px solid var(--bor);vertical-align:middle;}
+.att-table td:not(:first-child){text-align:right;font-family:'DM Mono',monospace;font-size:13px;}
+.att-table tr:last-child td{border-bottom:none;}
+.att-rank{font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);width:24px;text-align:center;}
+.att-name{font-size:14px;font-weight:600;}
+.att-bar-wrap{width:120px;height:6px;background:var(--sur2);border-radius:3px;display:inline-block;vertical-align:middle;margin-right:8px;}
+.att-bar-fill{height:100%;border-radius:3px;}
+.att-pct{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;}
+
+/* ── QTD rep rows ── */
+.qtd-rep-row{display:flex;align-items:center;gap:14px;padding:13px 18px;background:#181e2c;border:1px solid var(--bor);border-radius:11px;margin-bottom:8px;}
+.qtd-rep-rank{font-family:'DM Mono',monospace;font-size:12px;color:var(--mut);width:22px;text-align:center;flex-shrink:0;}
+.qtd-rep-name{font-size:14px;font-weight:600;min-width:150px;}
+.qtd-bar-wrap{flex:1;height:6px;background:var(--sur2);border-radius:3px;overflow:hidden;}
+.qtd-bar{height:100%;background:linear-gradient(90deg,#a78bfa,#7c3aed55);border-radius:3px;}
+.qtd-rep-amt{font-family:'DM Mono',monospace;font-size:12px;color:#a78bfa;min-width:90px;text-align:right;}
+.qtd-rep-ct{font-family:'DM Mono',monospace;font-size:11px;color:var(--mut);min-width:55px;text-align:right;}
+
+.ftr{padding:16px 48px;border-top:1px solid var(--bor);font-size:12px;color:var(--mut);display:flex;justify-content:space-between;font-family:'DM Mono',monospace;}
+@media(max-width:860px){
+  .topnav,.hdr,.nav,.ct,.ftr{padding-left:16px;padding-right:16px;}
+  .cards{grid-template-columns:repeat(2,1fr);}
+  .two{grid-template-columns:1fr;}
+  .topnav-link .lbl{display:none;}
+}
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="header-top">
-    <div><div class="header-title">AMERICAS Sales — Q4 FY2026</div><div class="header-sub">New / Expansion revenue only &nbsp;·&nbsp; Apr 1 – Jun 30, 2026</div></div>
-    <div class="header-meta">Grand total &nbsp;<span id="hdr-total">—</span><br>Team quota &nbsp;<span>$3,475,000</span><br>Weeks elapsed &nbsp;<span id="hdr-weeks">—</span></div>
+
+<nav class="topnav">
+  <a class="topnav-logo" href="https://aim-sales.github.io/aim-salesintelligence/">
+    <div class="topnav-logo-mark">AI</div>
+    AIM // Sales Intelligence
+  </a>
+  <div class="topnav-links">
+    <a class="topnav-link" href="https://aim-sales.github.io/aim-salesintelligence/"><span class="lbl">Hub</span></a>
+    <a class="topnav-link active" href="https://aim-sales.github.io/aim-salesintelligence/americas/"><span class="nav-dot dot-am"></span><span class="lbl">Americas</span></a>
+    <a class="topnav-link" href="https://aim-sales.github.io/aim-salesintelligence/apac/"><span class="nav-dot dot-ap"></span><span class="lbl">APAC</span></a>
+    <a class="topnav-link" href="https://aim-sales.github.io/aim-salesintelligence/emea/"><span class="nav-dot dot-em"></span><span class="lbl">EMEA</span></a>
   </div>
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('quota',this)">Quota attainment</button>
-    <button class="tab" onclick="switchTab('wow',this)">Week over week</button>
-    <button class="tab" onclick="switchTab('size',this)">Deal size</button>
-    <button class="tab" onclick="switchTab('momentum',this)">Momentum</button>
+</nav>
+
+<div class="hdr">
+  <div>
+    <h1>Americas — Weekly Snapshot</h1>
+    <p>May 19–25, 2026 &nbsp;·&nbsp; New/Expansion revenue only &nbsp;·&nbsp; ARR excluded &nbsp;·&nbsp; USD &nbsp;·&nbsp; Deals &gt; $0</p>
   </div>
+  <div class="hdr-r">Wins &nbsp;<span id="h-w">—</span><br>Losses &nbsp;<span id="h-l">—</span><br>New pipeline &nbsp;<span id="h-p">—</span></div>
 </div>
-<div class="content active" id="tab-quota">
-  <div class="cards" id="quota-cards"></div>
-  <div class="two-col">
-    <div class="chart-box"><div class="chart-title">Current attainment %</div><div class="legend"><span class="legend-item"><span class="legend-swatch" style="background:#3fb950"></span>On track (≥55%)</span><span class="legend-item"><span class="legend-swatch" style="background:#d29922"></span>At risk (35–54%)</span><span class="legend-item"><span class="legend-swatch" style="background:#f85149"></span>Behind (&lt;35%)</span></div><div class="chart-wrap" style="height:260px"><canvas id="attChart" role="img" aria-label="Q4 FY2026 quota attainment % by rep"></canvas></div></div>
-    <div class="chart-box"><div class="chart-title">Projected attainment at current pace</div><div class="chart-wrap" style="height:260px"><canvas id="projChart" role="img" aria-label="Projected Q4 attainment by rep"></canvas></div></div>
+
+<div class="nav">
+  <button class="tab on"      onclick="show('w')"   id="t-w">Wins</button>
+  <button class="tab"         onclick="show('l')"   id="t-l">Losses</button>
+  <button class="tab"         onclick="show('p')"   id="t-p">New pipeline</button>
+  <button class="tab"         onclick="show('r')"   id="t-r">By rep</button>
+  <button class="tab"         onclick="show('ww')"  id="t-ww">Week over week</button>
+  <button class="tab"         onclick="show('att')" id="t-att">Quota attainment</button>
+  <button class="tab"         onclick="show('sz')"  id="t-sz">Deal size</button>
+  <button class="tab"         onclick="show('mom')" id="t-mom">Momentum</button>
+  <button class="tab qtd-tab" onclick="show('qtd')" id="t-qtd">Q4 to date</button>
+  <button class="tab"         onclick="show('s')"   id="t-s">Summary</button>
+</div>
+
+<div class="ct on" id="tab-w"><div class="cards" id="wc"></div><div class="dl" id="wl"></div></div>
+<div class="ct"    id="tab-l"><div class="cards" id="lc"></div><div class="dl" id="ll"></div></div>
+<div class="ct"    id="tab-p"><div class="cards" id="pc"></div><div class="dl" id="pl"></div></div>
+<div class="ct"    id="tab-r">
+  <div class="two">
+    <div><div class="sh">Wins by rep · this week</div><div class="cws"><canvas id="cwr"></canvas></div></div>
+    <div><div class="sh">Pipeline by rep · this week</div><div class="cws"><canvas id="cpr"></canvas></div></div>
   </div>
-  <div class="chart-box"><table class="rep-table"><thead><tr><th>Rep</th><th>Closed</th><th>Quota</th><th>Gap</th><th>Attainment</th><th>Projected</th><th>Status</th></tr></thead><tbody id="quota-tbody"></tbody></table></div>
+  <div class="sh" style="margin-top:4px">New vs existing business · wins this week</div>
+  <div class="cards" id="dc"></div>
 </div>
-<div class="content" id="tab-wow">
-  <div class="cards" id="wow-cards"></div>
-  <div class="legend"><span class="legend-item"><span class="legend-swatch" style="background:#3fb950"></span>Up WoW</span><span class="legend-item"><span class="legend-swatch" style="background:#f85149"></span>Down WoW</span><span class="legend-item"><span class="legend-swatch" style="background:#58a6ff"></span>Current week (partial)</span></div>
-  <div class="chart-box"><div class="chart-title">Weekly closed won revenue · Q4 to date</div><div class="chart-wrap" style="height:280px"><canvas id="wowChart" role="img" aria-label="Weekly closed won Americas Q4"></canvas></div></div>
-  <hr class="div"><div class="sec-label">This week · May 9–15</div>
-  <table class="wow-table"><thead><tr><th>Deal</th><th>Rep</th><th>Type</th><th>Amount</th></tr></thead><tbody id="tw-tbody"></tbody></table>
-  <hr class="div"><div class="sec-label">Prior week · May 2–8</div>
-  <table class="wow-table"><thead><tr><th>Deal</th><th>Rep</th><th>Type</th><th>Amount</th></tr></thead><tbody id="pw-tbody"></tbody></table>
+<div class="ct" id="tab-ww"><div class="cards" id="wwc"></div><div class="cw"><canvas id="cww"></canvas></div></div>
+<div class="ct" id="tab-att">
+  <div class="cards" id="att-cards"></div>
+  <div class="sh">Rep quota attainment · Q4 FY2026 · ranked by % to target</div>
+  <table class="att-table" id="att-table"></table>
+  <div class="cw" style="height:220px;margin-top:8px"><canvas id="att-chart"></canvas></div>
 </div>
-<div class="content" id="tab-size">
-  <div class="chart-box"><div class="chart-title">Deal count by size bucket</div><div class="legend"><span class="legend-item"><span class="legend-swatch" style="background:#1c3a5c"></span>&lt;$10k</span><span class="legend-item"><span class="legend-swatch" style="background:#1a4223"></span>$10k–$50k</span><span class="legend-item"><span class="legend-swatch" style="background:#3d2f0a"></span>$50k–$100k</span><span class="legend-item"><span class="legend-swatch" style="background:#3d1a19"></span>&gt;$100k</span></div><div class="chart-wrap" style="height:300px"><canvas id="sizeChart" role="img" aria-label="Deal size distribution by rep"></canvas></div></div>
-  <div class="insight-grid" id="size-insights"></div>
+<div class="ct" id="tab-sz"><div class="cards" id="szc"></div><div class="cw"><canvas id="sz-chart"></canvas></div></div>
+<div class="ct" id="tab-mom"><div class="cards" id="momc"></div><div class="cw" style="height:300px"><canvas id="mom-chart"></canvas></div></div>
+<div class="ct" id="tab-qtd">
+  <div class="cards" id="qtd-cards"></div>
+  <div class="cw" style="height:240px;margin-bottom:28px"><canvas id="qtd-bar"></canvas></div>
+  <div class="sh">Q4 closed won by rep · New/Expansion · all deal values</div>
+  <div id="qtd-reps"></div>
+  <div class="sec-hd">All Q4 deals · Apr 1 – May 25, 2026</div>
+  <div class="dl" id="qtd-list"></div>
 </div>
-<div class="content" id="tab-momentum">
-  <div class="chart-box"><div class="chart-title">Weekly revenue trend per rep</div><div class="chart-wrap" style="height:320px"><canvas id="momentumChart" role="img" aria-label="Weekly revenue momentum per rep"></canvas></div></div>
-  <div class="insight-grid" id="momentum-insights"></div>
+<div class="ct" id="tab-s"><div class="cards" id="sc"></div><div class="cw"><canvas id="cs"></canvas></div></div>
+
+<div class="ftr">
+  <span>Americas Sales Pipeline · New/Expansion only · ARR excluded · pipeline 1558347 · dealstage Closed Won</span>
+  <span>Week of May 19–25, 2026</span>
 </div>
-<div class="footer"><span>AMERICAS Sales · New/Expansion only · revenue_type=New Revenue · pipeline 1558347</span><span>Generated May 18, 2026 &nbsp;·&nbsp; Data through May 15, 2026</span></div>
+
 <script>
-const Q4_START=new Date('2026-04-01'),Q4_WEEKS=13,TEAM_QUOTA=3475000,NUM_WEEKS=6;
-const WEEK_LABELS=['Apr 6','Apr 13','Apr 20','Apr 27','May 4','May 11'];
-const REPS=[
-  {id:'1207578277',name:'Michael Kohler',short:'Kohler', quota:450000},
-  {id:'123123099', name:'Wayne Farenga', short:'Farenga',quota:550000},
-  {id:'163659845', name:'Tony Graves',   short:'Graves', quota:550000},
-  {id:'584449824', name:'Jerry Guier',   short:'Guier',  quota:550000},
-  {id:'97018809',  name:'Travis Janssen',short:'Janssen',quota:550000},
-  {id:'558345085', name:'Russ Newton',   short:'Newton', quota:425000},
-  {id:'163838380', name:'Ken Blum',      short:'Blum',   quota:400000},
-  {id:'54689093',  name:'Clare Cawley',  short:'Cawley', quota:0},
-  {id:'2066988811',name:'Lindsay Bairos',short:'Bairos', quota:0},
-  {id:'83571933',  name:'Kaylie Knicely',short:'Knicely',quota:0},
+const OWN={
+  '123123099':'Wayne Farenga','584449824':'Jerry Guier','163659845':'Tony Graves',
+  '558345085':'Russ Newton','163838380':'Ken Blum','1207578277':'Michael Kohler',
+  '97018809':'Travis Janssen','54689093':'Clare Cawley','2066988811':'Lindsay Bairos',
+  '83571933':'Kaylie Knicely',
+};
+// Quota reps sorted by attainment (computed below, sorted in JS)
+const QUOTA_REPS=[
+  {id:'123123099',q:550000},
+  {id:'584449824',q:550000},
+  {id:'163659845',q:550000},
+  {id:'558345085',q:425000},
+  {id:'163838380',q:400000},
+  {id:'1207578277',q:450000},
+  {id:'97018809',q:550000},
 ];
-const repById={};REPS.forEach(r=>repById[r.id]=r);
-// Verified vs Excel: $1,608,352.82 · 64 revenue-bearing deals · revenue_type=New Revenue
-const D=[
-  {id:'58474847886',o:'123123099',d:'2026-04-02',a:1200,    n:'Performance Contractors - LEXI Translate 100HR',t:'e'},
-  {id:'57830305050',o:'123123099',d:'2026-04-02',a:72288,   n:'Disney - (2) GEN11 + (6) ALTA2110 PCRD24',t:'e'},
-  {id:'58630632111',o:'123123099',d:'2026-04-07',a:6000,    n:'Performance Contractors - AV610s 3rd Location',t:'e'},
-  {id:'14067994664',o:'123123099',d:'2026-04-08',a:8280,    n:'CatholicTV - Encoder Options',t:'n'},
-  {id:'59171691101',o:'123123099',d:'2026-04-16',a:4080,    n:'Encompass Digital Media - (2) SCTE Add-on',t:'e'},
-  {id:'59158342920',o:'123123099',d:'2026-04-24',a:2500,    n:'Mississippi State University - Lexi 100 Add-on',t:'e'},
-  {id:'59729770842',o:'123123099',d:'2026-04-28',a:31547.27,n:'Nike - AV Icap Int Lic + Support',t:'e'},
-  {id:'59915249979',o:'123123099',d:'2026-05-01',a:62880,   n:'Heartland Video - (6) 1492 + Back Panels HEARST',t:'e'},
-  {id:'59728039231',o:'123123099',d:'2026-05-04',a:4455,    n:'Verendus - HD592 Replace 1492 card',t:'n'},
-  {id:'59812479603',o:'123123099',d:'2026-05-04',a:6800,    n:'Future Grade - Lexi 500 In house',t:'e'},
-  {id:'58634183549',o:'123123099',d:'2026-05-05',a:11475,   n:'Fiber Group - HD492',t:'e'},
-  {id:'59963575347',o:'123123099',d:'2026-05-06',a:8935,    n:'Performance Contractors - AV610 + LEXI TX',t:'e'},
-  {id:'59503422577',o:'123123099',d:'2026-05-07',a:144576,  n:'Disney - (4) Proliant + (12) Alta Lic/Sub',t:'e'},
-  {id:'59609740979',o:'123123099',d:'2026-05-12',a:47152.9, n:'Roberts Communications - (2)1492 + Lexi Dog Racing',t:'n'},
-  {id:'58208379785',o:'163659845',d:'2026-04-01',a:29683,   n:'Sinclair - (8) DE1285 WGFL TV VANC',t:'e'},
-  {id:'58404120105',o:'163659845',d:'2026-04-01',a:14899,   n:'Sinclair - (4) DE1285 WEAR VANC',t:'e'},
-  {id:'59021358242',o:'163659845',d:'2026-04-14',a:14899,   n:'Sinclair - (4) DE1285 WSBT TV VANC',t:'e'},
-  {id:'59018151829',o:'163659845',d:'2026-04-14',a:11203,   n:'Sinclair - (3) DE1285 WHP TV VANC',t:'e'},
-  {id:'59018151713',o:'163659845',d:'2026-04-14',a:14899,   n:'Sinclair - (4) DE1285 KSNV TV VANC',t:'e'},
-  {id:'59021171565',o:'163659845',d:'2026-04-14',a:11203,   n:'Sinclair - (3) DE1285 WTOV TV VANC',t:'e'},
-  {id:'59812190800',o:'163659845',d:'2026-04-29',a:3040,    n:'HVS for KOB A1452 Urgent Order',t:'e'},
-  {id:'57397198932',o:'163659845',d:'2026-05-06',a:3514,    n:'Sinclair - (1) DE1285 WHBQ TV VANC',t:'e'},
-  {id:'60056550144',o:'163659845',d:'2026-05-06',a:116113.6,n:'Sinclair Television - LEXI USAGE Apr Q4 FY26',t:'e'},
-  {id:'59680046765',o:'163659845',d:'2026-05-07',a:6600,    n:'WarnerMedia - Falcon/Lexi May 2026',t:'e'},
-  {id:'57939093122',o:'163659845',d:'2026-05-11',a:3514,    n:'Sinclair - (1) DE1285 KLKN TV VANC',t:'e'},
-  {id:'60039271328',o:'163659845',d:'2026-05-14',a:37125,   n:"Bally's Media - Lexi Unlimited New Channel",t:'e'},
-  {id:'59087102058',o:'584449824',d:'2026-04-10',a:18000,   n:'Phase Engenharia - AV650 Globo',t:'n'},
-  {id:'57938945675',o:'584449824',d:'2026-04-13',a:8685,    n:'NorthPoint Church - Lexi Viewer + Block Hours',t:'n'},
-  {id:'59186356602',o:'584449824',d:'2026-04-15',a:18000,   n:'Phase Engenharia - AV650 Globo Sao Paulo',t:'n'},
-  {id:'59185340168',o:'584449824',d:'2026-04-17',a:2040,    n:'BC Live Productions - SCTE104 Events',t:'e'},
-  {id:'59185239569',o:'584449824',d:'2026-04-22',a:16787.75,n:'APG - HD1492 + Lexi Block Clearwater',t:'n'},
-  {id:'48798733125',o:'584449824',d:'2026-04-25',a:3300,    n:'Brown University - AltaRTMP Yearly/Monthly',t:'n'},
-  {id:'44866041751',o:'584449824',d:'2026-04-27',a:15065,   n:'KSL - Pro HD492 Broadcast',t:'n'},
-  {id:'59419023974',o:'584449824',d:'2026-04-29',a:15000,   n:'KXII Television - Lexi Unlimited Plan',t:'e'},
-  {id:'58295641961',o:'584449824',d:'2026-05-05',a:11475,   n:'Fiber Group - Pro HD492 CBS',t:'e'},
-  {id:'54616142903',o:'584449824',d:'2026-05-06',a:24543,   n:'South Carolina ETV - Pro HD492 (2)',t:'n'},
-  {id:'60076924724',o:'584449824',d:'2026-05-07',a:27500,   n:'KSL - Lexi Unlimited Plan',t:'e'},
-  {id:'60108272701',o:'584449824',d:'2026-05-08',a:15000,   n:'WTVM - Lexi Unlimited Plan',t:'n'},
-  {id:'60177698121',o:'584449824',d:'2026-05-13',a:23480,   n:'BC Live Productions - Pro HD492 (2) Events',t:'e'},
-  {id:'58295616354',o:'584449824',d:'2026-05-13',a:440,     n:'Brown University - Falcon Monthly Events',t:'n'},
-  {id:'58827759028',o:'1207578277',d:'2026-04-13',a:35640,  n:'Office of Legislative Counsel - ALTA RTMP x12',t:'e'},
-  {id:'59157131018',o:'1207578277',d:'2026-04-14',a:64800,  n:'SWAGIT LLC - HD492 Encoder Pro x6',t:'e'},
-  {id:'53806360629',o:'1207578277',d:'2026-04-16',a:28600,  n:'City of Rio Rancho - LEXI LOCAL',t:'n'},
-  {id:'58135992087',o:'1207578277',d:'2026-04-21',a:9936,   n:'City of Denton TX - LEXI Audio Description',t:'n'},
-  {id:'45144586374',o:'1207578277',d:'2026-04-23',a:185760, n:'Diversified - HD492 x16 GA State Legislature',t:'e'},
-  {id:'48535536530',o:'1207578277',d:'2026-04-30',a:45130,  n:'City of Sacramento - HD492 x2 + LEXI Voice',t:'n'},
-  {id:'59273545765',o:'1207578277',d:'2026-05-06',a:4320,   n:'Chandler-Gilbert CC - LEXI RECORDED 20hrs/mo',t:'n'},
-  {id:'52931697023',o:'1207578277',d:'2026-05-07',a:18156,  n:'AVI Systems - Peraton County of San Diego',t:'n'},
-  {id:'59812434993',o:'1207578277',d:'2026-05-15',a:16065,  n:'Key Code Media - HD492 City of Vancouver WA',t:'e'},
-  {id:'54314552115',o:'97018809',  d:'2026-04-08',a:20250,  n:'KSAZ - (2) HD492 Fox O&O',t:'n'},
-  {id:'58134899828',o:'97018809',  d:'2026-04-09',a:22950,  n:'NEP Group - (2) HD492 NWSL',t:'e'},
-  {id:'42100303757',o:'97018809',  d:'2026-04-24',a:46740,  n:'FOX Corporation - (6) Alta 2110 Tempe',t:'e'},
-  {id:'59545554865',o:'97018809',  d:'2026-04-24',a:46740,  n:'FOX Corporation - (6) Alta 2110 Pico',t:'e'},
-  {id:'59610203948',o:'97018809',  d:'2026-04-27',a:20250,  n:'KCPQ - (2) HD492 Fox O&O',t:'n'},
-  {id:'60036788239',o:'97018809',  d:'2026-05-06',a:1035,   n:'Stagedge - Falcon + Lexi 34 May',t:'e'},
-  {id:'59225075863',o:'97018809',  d:'2026-05-06',a:2040,   n:'NEP Group - SCTE-104 Mod',t:'e'},
-  {id:'60019871749',o:'97018809',  d:'2026-05-08',a:400,    n:'University of IL - CaptionCast Commencement',t:'e'},
-  {id:'56896782368',o:'558345085', d:'2026-04-01',a:42935.05,n:'CBC - Alta LEXI Professional Services 2026 Olympics',t:'e'},
-  {id:'58686631439',o:'558345085', d:'2026-04-06',a:10995,  n:'Diversified - HD1492 Google US-MTV-B46',t:'e'},
-  {id:'58798218396',o:'558345085', d:'2026-04-17',a:18145.6,n:'Microsoft - LEXI Text Additional Hours Apr 2026',t:'e'},
-  {id:'43542829996',o:'558345085', d:'2026-04-27',a:45034,  n:'Advanced Systems Group - Alta 2110 Salesforce',t:'e'},
-  {id:'58208758335',o:'163838380', d:'2026-04-08',a:22670,  n:'Washington Prof Systems - Encoder 4K x2 NAWC',t:'e'},
-  {id:'55198122863',o:'163838380', d:'2026-05-06',a:12565,  n:'City of Weston - Encoder Pro HD492 Trade In',t:'n'},
-  {id:'58208852889',o:'163838380', d:'2026-05-06',a:8000,   n:'Daytona Beach - LEXI 500 Block Hours',t:'n'},
-  {id:'50712899342',o:'54689093',  d:'2026-04-21',a:440,    n:'86Forty Productions - Ai-Live LEXI Contentful',t:'n'},
-  {id:'49695323177',o:'54689093',  d:'2026-04-21',a:4436,   n:'Disability Lead - Human CART VRI Summit',t:'e'},
-  {id:'59186215435',o:'2066988811',d:'2026-04-28',a:640,    n:'Butler University - LEXI AI Live',t:'e'},
-  {id:'58479536518',o:'2066988811',d:'2026-04-28',a:5019,   n:'Visual Technologies - HD492 Sub Encoder',t:'e'},
-  {id:'55035071919',o:'2066988811',d:'2026-05-04',a:100,    n:'Berry College - LEXI Hours PAYG',t:'n'},
-  {id:'60019844131',o:'2066988811',d:'2026-05-06',a:400,    n:'VCI EVENTS - CaptionCast Cal State LA',t:'e'},
+const sn=id=>(OWN[id]||'Other').split(' ').pop();
+const f$=v=>{v=parseFloat(v)||0;return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1000?'$'+Math.round(v/1000)+'k':'$'+Math.round(v);};
+const ff$=v=>'$'+(parseFloat(v)||0).toLocaleString('en-US',{maximumFractionDigits:0});
+const hsUrl=id=>`https://app.hubspot.com/contacts/3869869/record/0-3/${id}?utm_source=americas_weekly`;
+
+// ── THIS WEEK WINS (May 19-25) · verified Closed Won stage 5457494 ───────────
+const W=[
+  {id:'59185230716',n:'Newsmax Media - Lexi Unlimited Plan 2 Years',        o:'584449824',a:90000, t:'n'},
+  {id:'60052136742',n:"Bally's Media - (2) HD1492 Open Frame iCap Encoder", o:'163659845',a:28275, t:'e'},
+  {id:'60019820586',n:'NEP - HD492 - NWSL',                                 o:'97018809', a:11475, t:'e'},
+  {id:'60348406619',n:'Heartland Video Systems - HD492 - WIVT',             o:'97018809', a:10800, t:'e'},
+  {id:'40715653220',n:'Tennis Channel - Lexi Voice POC Conversion',         o:'163659845',a:3000,  t:'e'},
 ];
-function wkOf(d){return Math.max(0,Math.floor((new Date(d)-Q4_START)/(7*86400000)))}
-function fmt(n){if(!n)return'$0';if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(n>=1000)return'$'+Math.round(n/1000)+'k';return'$'+Math.round(n)}
-function fmtF(n){return'$'+Math.round(n||0).toLocaleString()}
-function pct(n,q){return q?Math.round(n/q*100):0}
-const u=id=>`https://app.hubspot.com/contacts/3869869/record/0-3/${id}?utm_source=app_16228553_mcp&utm_medium=ai_agent&utm_campaign=search`;
-function switchTab(id,btn){document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active')}
-const today=new Date('2026-05-18'),wkEl=Math.round((today-Q4_START)/(7*86400000)*10)/10;
-const tots={};REPS.forEach(r=>{tots[r.id]=0});D.forEach(d=>{if(tots[d.o]!==undefined)tots[d.o]+=(d.a||0)});
-const mainR=REPS.filter(r=>r.quota>0);
-const teamC=mainR.reduce((s,r)=>s+(tots[r.id]||0),0);
-const grandT=Object.values(tots).reduce((s,v)=>s+v,0);
-document.getElementById('hdr-total').textContent=fmt(grandT);
-document.getElementById('hdr-weeks').textContent=wkEl.toFixed(1)+' / '+Q4_WEEKS;
-const wkRate=teamC/wkEl,projQ4=wkRate*Q4_WEEKS;
-document.getElementById('quota-cards').innerHTML=`<div class="card"><div class="card-label">Team attainment</div><div class="card-value">${pct(teamC,TEAM_QUOTA)}%</div><div class="card-sub">of $3.475M quota</div></div><div class="card"><div class="card-label">Closed to date</div><div class="card-value">${fmt(teamC)}</div><div class="card-sub">${D.filter(d=>repById[d.o]?.quota>0&&d.a>0).length} deals · Apr 1–May 15</div></div><div class="card"><div class="card-label">Weekly run rate</div><div class="card-value">${fmt(wkRate)}</div><div class="card-sub">avg over ${wkEl.toFixed(1)} weeks</div></div><div class="card"><div class="card-label">Projected Q4</div><div class="card-value">${pct(projQ4,TEAM_QUOTA)}%</div><div class="card-sub">${fmt(projQ4)} at current pace</div></div>`;
-new Chart(document.getElementById('attChart'),{type:'bar',data:{labels:mainR.map(r=>r.short),datasets:[{data:mainR.map(r=>pct(tots[r.id]||0,r.quota)),backgroundColor:mainR.map(r=>{const a=pct(tots[r.id]||0,r.quota);return a>=55?'#3fb950':a>=35?'#d29922':'#f85149'}),borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>v+'%'},max:120}}}});
-new Chart(document.getElementById('projChart'),{type:'bar',data:{labels:mainR.map(r=>r.short),datasets:[{data:mainR.map(r=>pct((tots[r.id]||0)/wkEl*Q4_WEEKS,r.quota)),backgroundColor:mainR.map(r=>{const p=pct((tots[r.id]||0)/wkEl*Q4_WEEKS,r.quota);return p>=100?'#3fb950':p>=70?'#d29922':'#f85149'}),borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>v+'%'},max:250}}}});
-const tb=document.getElementById('quota-tbody');
-mainR.forEach(r=>{const rev=tots[r.id]||0,att=pct(rev,r.quota),gap=Math.max(0,r.quota-rev),proj=pct(rev/wkEl*Q4_WEEKS,r.quota),bc=att>=55?'#3fb950':att>=35?'#d29922':'#f85149';const bdg=proj>=100?'<span class="badge badge-green">On track</span>':proj>=70?'<span class="badge badge-amber">At risk</span>':'<span class="badge badge-red">Behind</span>';tb.innerHTML+=`<tr><td style="font-weight:500">${r.name}</td><td>${fmtF(rev)}</td><td>${fmtF(r.quota)}</td><td>${gap?fmtF(gap):'—'}</td><td><span class="att-bar-wrap"><span class="att-bar-fill" style="width:${Math.min(100,att)}%;background:${bc}"></span></span>${att}%</td><td>${proj}%</td><td>${bdg}</td></tr>`});
-const wkT=Array(NUM_WEEKS).fill(0);D.forEach(d=>{const w=wkOf(d.d);if(w<NUM_WEEKS)wkT[w]+=(d.a||0)});
-const TW=D.filter(d=>d.d>='2026-05-09'&&d.d<='2026-05-15'&&repById[d.o]);
-const PW=D.filter(d=>d.d>='2026-05-02'&&d.d<='2026-05-08'&&repById[d.o]);
-const twT=TW.reduce((s,d)=>s+(d.a||0),0),pwT=PW.reduce((s,d)=>s+(d.a||0),0);
-const wowP=pwT?Math.round((twT-pwT)/pwT*100):0;
-document.getElementById('wow-cards').innerHTML=`<div class="card"><div class="card-label">This week (May 9–15)</div><div class="card-value">${fmt(twT)}</div><div class="card-sub ${wowP>=0?'up':'dn'}">${wowP>=0?'+':''}${wowP}% vs prior week</div></div><div class="card"><div class="card-label">Prior week (May 2–8)</div><div class="card-value">${fmt(pwT)}</div><div class="card-sub">baseline</div></div><div class="card"><div class="card-label">Weekly avg</div><div class="card-value">${fmt(grandT/wkEl)}</div><div class="card-sub">Q4 to date</div></div><div class="card"><div class="card-label">Q4 total</div><div class="card-value">${fmt(grandT)}</div><div class="card-sub">New/Expansion only</div></div>`;
-const bc2=wkT.map((v,i)=>i===NUM_WEEKS-1?'#58a6ff':i===0?'#3fb950':v>=wkT[i-1]?'#3fb950':'#f85149');
-new Chart(document.getElementById('wowChart'),{type:'bar',data:{labels:WEEK_LABELS,datasets:[{data:wkT,backgroundColor:bc2,borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>fmt(v)}}}}});
-const ttb=document.getElementById('tw-tbody');TW.filter(d=>d.a>0).sort((a,b)=>b.a-a.a).forEach(d=>{ttb.innerHTML+=`<tr><td><a href="${u(d.id)}">${d.n}</a></td><td style="color:#8b949e">${repById[d.o]?.short||''}</td><td><span class="${d.t==='n'?'type-new':'type-exp'}">${d.t==='n'?'New':'Expansion'}</span></td><td>${fmtF(d.a)}</td></tr>`});
-const ptb=document.getElementById('pw-tbody');PW.filter(d=>d.a>0).sort((a,b)=>b.a-a.a).forEach(d=>{ptb.innerHTML+=`<tr><td><a href="${u(d.id)}">${d.n}</a></td><td style="color:#8b949e">${repById[d.o]?.short||''}</td><td><span class="${d.t==='n'?'type-new':'type-exp'}">${d.t==='n'?'New':'Expansion'}</span></td><td>${fmtF(d.a)}</td></tr>`});
-const dByR={};REPS.forEach(r=>{dByR[r.id]=[]});D.forEach(d=>{if(dByR[d.o])dByR[d.o].push(d)});
-const bkt=a=>a<10000?0:a<50000?1:a<100000?2:3;
-const sc=mainR.map(r=>{const c=[0,0,0,0];(dByR[r.id]||[]).forEach(d=>{if(d.a>0)c[bkt(d.a)]++});return c});
-new Chart(document.getElementById('sizeChart'),{type:'bar',data:{labels:mainR.map(r=>r.short),datasets:[{label:'<$10k',data:sc.map(c=>c[0]),backgroundColor:'#1c3a5c',stack:'s'},{label:'$10k–$50k',data:sc.map(c=>c[1]),backgroundColor:'#1a4223',stack:'s'},{label:'$50k–$100k',data:sc.map(c=>c[2]),backgroundColor:'#3d2f0a',stack:'s'},{label:'>$100k',data:sc.map(c=>c[3]),backgroundColor:'#3d1a19',stack:'s'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'},stacked:true},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'},stacked:true}}}});
-const si=document.getElementById('size-insights');mainR.forEach(r=>{const ds=(dByR[r.id]||[]).filter(d=>d.a>0);const avg=ds.length?Math.round(ds.reduce((s,d)=>s+d.a,0)/ds.length):0,mx=ds.length?Math.max(...ds.map(d=>d.a)):0;si.innerHTML+=`<div class="insight-card"><div class="insight-name">${r.name}</div><div class="insight-val">${fmtF(avg)}</div><div class="insight-sub">avg deal size · Max: ${fmtF(mx)}</div></div>`});
-const wkM={};REPS.forEach(r=>{wkM[r.id]=Array(NUM_WEEKS).fill(0)});D.forEach(d=>{const w=wkOf(d.d);if(w<NUM_WEEKS&&wkM[d.o])wkM[d.o][w]+=(d.a||0)});
-const CLR=['#58a6ff','#3fb950','#a371f7','#f0883e','#f85149','#79c0ff','#56d364'];
-new Chart(document.getElementById('momentumChart'),{type:'line',data:{labels:WEEK_LABELS,datasets:mainR.map((r,i)=>({label:r.short,data:wkM[r.id],borderColor:CLR[i],backgroundColor:'transparent',borderWidth:2,pointRadius:3,tension:.3}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8b949e',font:{size:11},boxWidth:12}}},scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#8b949e',callback:v=>fmt(v)}}}}});
-const mi=document.getElementById('momentum-insights');mainR.forEach(r=>{const wk=wkM[r.id],tw=wk[NUM_WEEKS-1]||0,pw=wk[NUM_WEEKS-2]||0,up=tw>=pw;mi.innerHTML+=`<div class="insight-card"><div class="insight-name">${r.name}</div><div class="insight-val ${up?'accel':'decel'}">${up?'↑ Accelerating':'↓ Decelerating'}</div><div class="insight-sub">This week: ${fmt(tw)}</div></div>`});
+
+// ── PRIOR WEEK WINS (May 12-18) ───────────────────────────────────────────────
+const PW=[
+  {id:'59812434993',n:'Key Code Media - HD492 City of Vancouver WA', o:'1207578277',a:16065,t:'e'},
+  {id:'57619337985',n:'Key Code Media - Lexi Block Hours KET PBS',   o:'584449824', a:12750,t:'e'},
+  {id:'60039271328',n:"Bally's Media - Lexi Unlimited New Channel",  o:'163659845', a:37125,t:'e'},
+  {id:'60177698121',n:'BC Live Productions - Pro HD492 (2) Events',  o:'584449824', a:23480,t:'e'},
+  {id:'59609740979',n:'Roberts Communications - (2)1492 + Lexi',     o:'123123099', a:47152.9,t:'n'},
+];
+
+// ── LOSSES ────────────────────────────────────────────────────────────────────
+const L=[
+  {id:'',n:'City of Austin - HD492 x5',             o:'1207578277',a:78642, t:'e',r:''},
+  {id:'',n:"Mayor's Office Cable - Baltimore Schools",o:'163838380', a:75775, t:'e',r:''},
+  {id:'',n:'Innuvo - HD492/AV610 x3 & Lexi',        o:'163838380', a:59164, t:'n',r:'No response'},
+  {id:'',n:'Buncombe County - LEXI Audio Desc.',     o:'1207578277',a:51340, t:'n',r:''},
+  {id:'',n:'NBCUniversal - CC-Match',                o:'97018809',  a:33120, t:'e',r:''},
+];
+
+// ── NEW PIPELINE (May 19-25) ──────────────────────────────────────────────────
+const P=[
+  {id:'60487323963',n:'Yorktel - UHD592 + LEXI Local Unlimited - VA Lebanon PA',        o:'163838380', a:47020},
+  {id:'60355660579',n:'CTI - HD492 + Lexi Local - On-Prem captioning',                  o:'97018809',  a:44200},
+  {id:'60355160633',n:'Nike - ICAP - 7/1/26 to 6/30/27',                               o:'123123099', a:33534},
+  {id:'60486857648',n:'ABC 6 News - Products Project/Event',                            o:'163659845', a:27500},
+  {id:'60487323480',n:'Yorktel - UHD592 + 1,000 Hours LEXI Text - VA Lebanon PA',       o:'163838380', a:26660},
+  {id:'60347166562',n:'Alpha - HD492 + Vanc + Stadium Mod + Lexi - Chicago Fire FC',    o:'123123099', a:21704.75},
+  {id:'60486922928',n:'ABC 6 News - Lexi Text 30 hours/week',                           o:'163659845', a:15600},
+  {id:'60486764604',n:'Santa Barbara County - Annual Support Renewal 2026-2027',        o:'1207578277',a:14110},
+  {id:'60419649844',n:'AVI-SPL - HD492 - Chicago Fire FC Project',                      o:'123123099', a:13905},
+  {id:'60349801744',n:'Telemundo/Univision - (8) ALTA Licenses Internal',               o:'123123099', a:12400},
+  {id:'60419960989',n:'NBCUniversal - HD492 + SCTE 104 - WCAU',                        o:'97018809',  a:11925},
+  {id:'60486645921',n:'SHI - (2) Falcon + Lexi Captioning',                            o:'97018809',  a:6672.5},
+];
+
+// ── QTD · all verified deals from HubSpot (amount > 0) ───────────────────────
+const QTD=[
+  {id:'59185230716',n:'Newsmax Media - Lexi Unlimited Plan 2 Years',            o:'584449824',a:90000,   d:'2026-05-19',t:'n'},
+  {id:'60052136742',n:"Bally's Media - (2) HD1492 Open Frame iCap",             o:'163659845',a:28275,   d:'2026-05-20',t:'e'},
+  {id:'60019820586',n:'NEP - HD492 - NWSL',                                     o:'97018809', a:11475,   d:'2026-05-21',t:'e'},
+  {id:'60348406619',n:'Heartland Video Systems - HD492 - WIVT',                 o:'97018809', a:10800,   d:'2026-05-19',t:'e'},
+  {id:'40715653220',n:'Tennis Channel - Lexi Voice POC',                        o:'163659845',a:3000,    d:'2026-05-22',t:'e'},
+  {id:'59812434993',n:'Key Code Media - HD492 City of Vancouver WA',            o:'1207578277',a:16065,  d:'2026-05-15',t:'e'},
+  {id:'57619337985',n:'Key Code Media - Lexi Block Hours KET PBS',              o:'584449824', a:12750,  d:'2026-05-15',t:'e'},
+  {id:'60039271328',n:"Bally's Media - Lexi Unlimited New Channel",             o:'163659845', a:37125,  d:'2026-05-14',t:'e'},
+  {id:'60177698121',n:'BC Live Productions - Pro HD492 (2) Events',             o:'584449824', a:23480,  d:'2026-05-13',t:'e'},
+  {id:'59609740979',n:'Roberts Communications - (2)1492 + Lexi Dog Racing',     o:'123123099', a:47152.9,d:'2026-05-12',t:'n'},
+  {id:'60108272701',n:'WTVM - Lexi Unlimited Plan',                             o:'584449824', a:15000,  d:'2026-05-08',t:'n'},
+  {id:'52931697023',n:'AVI Systems - PERATON County of San Diego',              o:'1207578277',a:18156,  d:'2026-05-07',t:'n'},
+  {id:'59503422577',n:'Disney - (4) Proliant + (12) Alta Lic/Sub',              o:'123123099', a:144576, d:'2026-05-07',t:'e'},
+  {id:'60076924724',n:'KSL - Lexi Unlimited Plan',                             o:'584449824', a:27500,  d:'2026-05-07',t:'e'},
+  {id:'59680046765',n:'WarnerMedia - Falcon/Lexi May 2026',                    o:'163659845', a:6600,   d:'2026-05-07',t:'e'},
+  {id:'58208852889',n:'Daytona Beach - LEXI 500 Block Hours',                  o:'163838380', a:8000,   d:'2026-05-06',t:'n'},
+  {id:'59963575347',n:'Performance Contractors - AV610 + LEXI Texas',          o:'123123099', a:8935,   d:'2026-05-06',t:'e'},
+  {id:'55198122863',n:'City of Weston - Encoder Pro HD492',                    o:'163838380', a:12565,  d:'2026-05-06',t:'n'},
+  {id:'60056550144',n:'Sinclair Television - LEXI USAGE Apr Q4 FY26',          o:'163659845', a:116113.6,d:'2026-05-06',t:'e'},
+  {id:'54616142903',n:'South Carolina ETV - Pro HD492 (2)',                    o:'584449824', a:24543,  d:'2026-05-06',t:'n'},
+  {id:'58295641961',n:'Fiber Group - Pro HD492 CBS',                           o:'584449824', a:11475,  d:'2026-05-05',t:'e'},
+  {id:'58634183549',n:'Fiber Group - HD492',                                   o:'123123099', a:11475,  d:'2026-05-05',t:'e'},
+  {id:'59812479603',n:'Future Grade - Lexi 500 In house',                      o:'123123099', a:6800,   d:'2026-05-04',t:'e'},
+  {id:'59915249979',n:'Heartland Video - (6) 1492 + Back Panels HEARST',       o:'123123099', a:62880,  d:'2026-05-01',t:'e'},
+  {id:'58479536518',n:'Visual Technologies - HD492 Subscription Encoder',      o:'2066988811',a:5019,   d:'2026-04-28',t:'e'},
+  {id:'48535536530',n:'City of Sacramento - HD492 x2 + LEXI Voice',            o:'1207578277',a:45130,  d:'2026-04-30',t:'n'},
+  {id:'59419023974',n:'KXII Television - Lexi Unlimited Plan',                 o:'584449824', a:15000,  d:'2026-04-29',t:'e'},
+  {id:'59729770842',n:'Nike - AV Icap int Lic + Support',                      o:'123123099', a:31547.27,d:'2026-04-28',t:'e'},
+  {id:'44866041751',n:'KSL - Pro HD492',                                       o:'584449824', a:15065,  d:'2026-04-27',t:'n'},
+  {id:'59610203948',n:'KCPQ - (2) HD492 Fox O&O',                             o:'97018809',  a:20250,  d:'2026-04-27',t:'n'},
+  {id:'43542829996',n:'Advanced Systems Group - Alta 2110 Salesforce',         o:'558345085', a:45034,  d:'2026-04-27',t:'e'},
+  {id:'59545554865',n:'FOX Corporation - (6) Alta 2110 Pico',                 o:'97018809',  a:46740,  d:'2026-04-24',t:'e'},
+  {id:'42100303757',n:'FOX Corporation - (6) Alta 2110 Tempe',                o:'97018809',  a:46740,  d:'2026-04-24',t:'e'},
+  {id:'45144586374',n:'Diversified - HD492 x16 GA State Legislature',          o:'1207578277',a:185760, d:'2026-04-23',t:'e'},
+  {id:'59185239569',n:'APG - HD1492 + Lexi Block Hours Clearwater',            o:'584449824', a:16787.75,d:'2026-04-22',t:'n'},
+  {id:'58135992087',n:'City of Denton TX - LEXI Audio Description',            o:'1207578277',a:9936,   d:'2026-04-21',t:'n'},
+  {id:'58798218396',n:'Microsoft - LEXI Text Additional Hours Apr 2026',       o:'558345085', a:18145.6,d:'2026-04-17',t:'e'},
+  {id:'53806360629',n:'City of Rio Rancho - LEXI LOCAL',                       o:'1207578277',a:28600,  d:'2026-04-16',t:'n'},
+  {id:'59186356602',n:'Phase Engenharia - AV650 Globo Sao Paulo',              o:'584449824', a:18000,  d:'2026-04-15',t:'n'},
+  {id:'59021171565',n:'Sinclair - (3) DE1285 WTOV TV VANC',                   o:'163659845', a:11203,  d:'2026-04-14',t:'e'},
+  {id:'59018151713',n:'Sinclair - (4) DE1285 KSNV TV VANC',                   o:'163659845', a:14899,  d:'2026-04-14',t:'e'},
+  {id:'59018151829',n:'Sinclair - (3) DE1285 WHP TV VANC',                    o:'163659845', a:11203,  d:'2026-04-14',t:'e'},
+  {id:'59021358242',n:'Sinclair - (4) DE1285 WSBT TV VANC',                   o:'163659845', a:14899,  d:'2026-04-14',t:'e'},
+  {id:'59157131018',n:'SWAGIT LLC - HD492 Encoder Pro x6',                    o:'1207578277',a:64800,  d:'2026-04-14',t:'e'},
+  {id:'57938945675',n:'NorthPoint Church - Lexi Viewer + Block Hours',         o:'584449824', a:8685,   d:'2026-04-13',t:'n'},
+  {id:'58827759028',n:'Office of Legislative Counsel - ALTA RTMP x12',         o:'1207578277',a:35640,  d:'2026-04-13',t:'e'},
+  {id:'59087102058',n:'Phase Engenharia - AV650 Globo',                       o:'584449824', a:18000,  d:'2026-04-10',t:'n'},
+  {id:'58134899828',n:'NEP Group - (2) HD492 NWSL',                          o:'97018809',  a:22950,  d:'2026-04-09',t:'e'},
+  {id:'54314552115',n:'KSAZ - (2) HD492 Fox O&O',                            o:'97018809',  a:20250,  d:'2026-04-08',t:'n'},
+  {id:'58208758335',n:'Washington Professional Systems - Encoder 4K x2',      o:'163838380', a:22670,  d:'2026-04-08',t:'e'},
+  {id:'14067994664',n:'CatholicTV - Encoder Options',                         o:'123123099', a:8280,   d:'2026-04-08',t:'n'},
+  {id:'58630632111',n:'Performance Contractors - AV610s 3rd location',        o:'123123099', a:6000,   d:'2026-04-07',t:'e'},
+  {id:'58686631439',n:'Diversified - HD1492 Google US-MTV-B46',               o:'558345085', a:10995,  d:'2026-04-06',t:'e'},
+  {id:'57830305050',n:'Disney - (2) GEN11 + (6) ALTA2110 PCRD24',            o:'123123099', a:72288,  d:'2026-04-02',t:'e'},
+  {id:'58404120105',n:'Sinclair - (4) DE1285 WEAR VANC',                     o:'163659845', a:14899,  d:'2026-04-01',t:'e'},
+  {id:'58208379785',n:'Sinclair - (8) DE1285 WGFL TV VANC',                  o:'163659845', a:29683,  d:'2026-04-01',t:'e'},
+  {id:'56896782368',n:'CBC - Alta LEXI Professional Services 2026 Olympics',  o:'558345085', a:42935.05,d:'2026-04-01',t:'e'},
+];
+
+// ── Computed totals ───────────────────────────────────────────────────────────
+const wT=W.reduce((s,d)=>s+d.a,0);
+const lT=L.reduce((s,d)=>s+d.a,0);
+const pT=P.reduce((s,d)=>s+d.a,0);
+const pwT=PW.reduce((s,d)=>s+d.a,0);
+const wowP=pwT?Math.round((wT-pwT)/pwT*100):0;
+const net=wT-lT;
+const wNB=W.filter(d=>d.t==='n').reduce((s,d)=>s+d.a,0);
+const wEB=W.filter(d=>d.t==='e').reduce((s,d)=>s+d.a,0);
+const lNB=L.filter(d=>d.t==='n').reduce((s,d)=>s+d.a,0);
+const lEB=L.filter(d=>d.t==='e').reduce((s,d)=>s+d.a,0);
+const TEAM_Q=3475000;
+
+// QTD rep totals
+const qtdRepT={},qtdRepC={};
+QTD.forEach(d=>{qtdRepT[d.o]=(qtdRepT[d.o]||0)+d.a;qtdRepC[d.o]=(qtdRepC[d.o]||0)+1;});
+const qtdTotal=QTD.reduce((s,d)=>s+d.a,0);
+const teamClosed=QUOTA_REPS.reduce((s,r)=>s+(qtdRepT[r.id]||0),0);
+const teamAtt=Math.round(teamClosed/TEAM_Q*100);
+
+document.getElementById('h-w').textContent=ff$(wT);
+document.getElementById('h-l').textContent=ff$(lT);
+document.getElementById('h-p').textContent=ff$(pT);
+
+// ── Row builders ─────────────────────────────────────────────────────────────
+const row=(d,cls)=>`
+  <div class="di">
+    <div class="dil">
+      <div class="dn">${d.n}</div>
+      <div class="dm">${OWN[d.o]||'—'} <span class="bdg ${d.t==='n'?'nb':'eb'}">${d.t==='n'?'New biz':'Existing'}</span>${d.r?` · ${d.r}`:''}</div>
+    </div>
+    <div class="da-r">
+      <div class="da ${cls}">${ff$(d.a)}</div>
+      ${d.id?`<a class="hs-link" href="${hsUrl(d.id)}" target="_blank">↗</a>`:''}
+    </div>
+  </div>`;
+const prow=d=>`
+  <div class="di">
+    <div class="dil">
+      <div class="dn">${d.n}</div>
+      <div class="dm">${OWN[d.o]||'—'}</div>
+    </div>
+    <div class="da-r">
+      <div class="da ba">${ff$(d.a)}</div>
+      ${d.id?`<a class="hs-link" href="${hsUrl(d.id)}" target="_blank">↗</a>`:''}
+    </div>
+  </div>`;
+
+// ── Wins ──────────────────────────────────────────────────────────────────────
+document.getElementById('wc').innerHTML=`
+  <div class="card"><div class="cl">Total wins</div><div class="cv" style="color:var(--grn)">${ff$(wT)}</div><div class="cs">${W.length} deals · May 19–25</div></div>
+  <div class="card"><div class="cl">New business</div><div class="cv">${ff$(wNB)}</div><div class="cs">${W.filter(d=>d.t==='n').length} new-customer deals</div></div>
+  <div class="card"><div class="cl">Existing business</div><div class="cv">${ff$(wEB)}</div><div class="cs">${W.filter(d=>d.t==='e').length} current-customer deals</div></div>
+  <div class="card"><div class="cl">Avg deal size</div><div class="cv">${f$(wT/W.length)}</div><div class="cs">this week</div></div>`;
+document.getElementById('wl').innerHTML=[...W].sort((a,b)=>b.a-a.a).map(d=>row(d,'ga')).join('');
+
+// ── Losses ────────────────────────────────────────────────────────────────────
+const bigL=L.length?L.reduce((mx,d)=>d.a>mx.a?d:mx,L[0]):null;
+document.getElementById('lc').innerHTML=`
+  <div class="card"><div class="cl">Total losses</div><div class="cv" style="color:var(--red)">${ff$(lT)}</div><div class="cs">${L.length} deals</div></div>
+  <div class="card"><div class="cl">New business lost</div><div class="cv">${ff$(lNB)}</div><div class="cs">${L.filter(d=>d.t==='n').length} deals</div></div>
+  <div class="card"><div class="cl">Existing biz lost</div><div class="cv">${ff$(lEB)}</div><div class="cs">${L.filter(d=>d.t==='e').length} deals</div></div>
+  <div class="card"><div class="cl">Largest loss</div><div class="cv">${bigL?f$(bigL.a):'—'}</div><div class="cs">${bigL?bigL.n.split(' - ')[0]:'No losses'}</div></div>`;
+document.getElementById('ll').innerHTML=[...L].sort((a,b)=>b.a-a.a).map(d=>row(d,'ra')).join('');
+
+// ── Pipeline ──────────────────────────────────────────────────────────────────
+const bigP=P.reduce((mx,d)=>d.a>mx.a?d:mx,P[0]);
+document.getElementById('pc').innerHTML=`
+  <div class="card"><div class="cl">New pipeline</div><div class="cv" style="color:var(--acc)">${ff$(pT)}</div><div class="cs">${P.length} deals · May 19–25</div></div>
+  <div class="card"><div class="cl">Avg deal size</div><div class="cv">${f$(pT/P.length)}</div><div class="cs">new opportunities</div></div>
+  <div class="card"><div class="cl">Largest opp.</div><div class="cv">${f$(bigP.a)}</div><div class="cs">${bigP.n.split(' - ')[0]}</div></div>
+  <div class="card"><div class="cl">Coverage ratio</div><div class="cv">${(pT/wT).toFixed(1)}x</div><div class="cs">pipeline vs wins</div></div>`;
+document.getElementById('pl').innerHTML=[...P].sort((a,b)=>b.a-a.a).map(prow).join('');
+
+// ── WoW ───────────────────────────────────────────────────────────────────────
+document.getElementById('wwc').innerHTML=`
+  <div class="card"><div class="cl">Wins this week</div><div class="cv" style="color:var(--grn)">${ff$(wT)}</div><div class="cs" style="color:${wowP>=0?'var(--grn)':'var(--red)'}">${wowP>=0?'+':''}${wowP}% vs prior week</div></div>
+  <div class="card"><div class="cl">Prior week (May 12–18)</div><div class="cv">${ff$(pwT)}</div><div class="cs">${PW.length} deals</div></div>
+  <div class="card"><div class="cl">Losses this week</div><div class="cv" style="color:var(--red)">${ff$(lT)}</div><div class="cs">${L.length} deals</div></div>
+  <div class="card"><div class="cl">Net (W–L)</div><div class="cv" style="color:${net>=0?'var(--grn)':'var(--red)'}">${net>=0?'':'-'}${ff$(Math.abs(net))}</div><div class="cs">${net>=0?'positive':'negative'} week</div></div>`;
+
+// ── Quota attainment ──────────────────────────────────────────────────────────
+document.getElementById('att-cards').innerHTML=`
+  <div class="card"><div class="cl">Team attainment</div><div class="cv" style="color:${teamAtt>=55?'var(--grn)':teamAtt>=35?'var(--amber)':'var(--red)'}">${teamAtt}%</div><div class="cs">of $3.475M quota · Q4</div></div>
+  <div class="card"><div class="cl">Team closed Q4</div><div class="cv">${f$(teamClosed)}</div><div class="cs">Apr 1 – May 25</div></div>
+  <div class="card"><div class="cl">Weeks elapsed</div><div class="cv">7.3</div><div class="cs">of 13 · ${(7.3/13*100).toFixed(0)}% of Q4</div></div>
+  <div class="card"><div class="cl">Projected Q4</div><div class="cv" style="color:${Math.round(teamClosed/7.3*13/TEAM_Q*100)>=100?'var(--grn)':'var(--amber)'}">${Math.round(teamClosed/7.3*13/TEAM_Q*100)}%</div><div class="cs">at current pace</div></div>`;
+
+// Sort reps by % attainment
+const attColor=p=>p>=55?'#3dd68c':p>=35?'#f59e0b':'#f25c5c';
+const sortedReps=[...QUOTA_REPS].map(r=>{
+  const closed=qtdRepT[r.id]||0;
+  const pct=Math.round(closed/r.q*100);
+  return{...r,closed,pct};
+}).sort((a,b)=>b.pct-a.pct);
+
+const attTbl=document.getElementById('att-table');
+attTbl.innerHTML=`<thead><tr>
+  <th>#</th><th>Rep</th><th>Attainment</th><th style="text-align:right">% to target</th>
+  <th style="text-align:right">Closed</th><th style="text-align:right">Quota</th><th style="text-align:right">Gap</th>
+</tr></thead><tbody>${
+  sortedReps.map((r,i)=>{
+    const gap=Math.max(0,r.q-r.closed);
+    return `<tr>
+      <td class="att-rank">${i+1}</td>
+      <td><span style="font-size:14px;font-weight:600">${OWN[r.id]}</span></td>
+      <td>
+        <span class="att-bar-wrap"><span class="att-bar-fill" style="width:${Math.min(100,r.pct)}%;background:${attColor(r.pct)}"></span></span>
+      </td>
+      <td><span class="att-pct" style="color:${attColor(r.pct)}">${r.pct}%</span></td>
+      <td>${ff$(r.closed)}</td>
+      <td style="color:var(--mut)">${ff$(r.q)}</td>
+      <td style="color:${gap?'var(--mut)':'var(--grn)'}">${gap?ff$(gap):'✓ Met'}</td>
+    </tr>`;
+  }).join('')
+}</tbody>`;
+
+// ── QTD ───────────────────────────────────────────────────────────────────────
+document.getElementById('qtd-cards').innerHTML=`
+  <div class="card"><div class="cl">Q4 Revenue</div><div class="cv" style="color:#a78bfa">${ff$(qtdTotal)}</div><div class="cs">${QTD.length} deals · Apr 1–May 25</div></div>
+  <div class="card"><div class="cl">Avg deal size</div><div class="cv" style="color:#a78bfa">${f$(qtdTotal/QTD.length)}</div><div class="cs">all deals</div></div>
+  <div class="card"><div class="cl">Largest deal</div><div class="cv" style="color:#a78bfa">${f$(Math.max(...QTD.map(d=>d.a)))}</div><div class="cs">${QTD.reduce((mx,d)=>d.a>mx.a?d:mx,QTD[0]).n.split(' - ')[0]}</div></div>
+  <div class="card"><div class="cl">Reps with wins</div><div class="cv" style="color:#a78bfa">${new Set(QTD.map(d=>d.o)).size}</div><div class="cs">of 7 quota reps</div></div>`;
+
+document.getElementById('qtd-list').innerHTML=[...QTD].sort((a,b)=>b.a-a.a).map(d=>`
+  <div class="di">
+    <div class="dil">
+      <div class="dn">${d.n}</div>
+      <div class="dm">${OWN[d.o]||'—'} <span class="bdg ${d.t==='n'?'nb':'eb'}">${d.t==='n'?'New biz':'Existing'}</span> <span>${d.d}</span></div>
+    </div>
+    <div class="da-r">
+      <div class="da va">${ff$(d.a)}</div>
+      ${d.id?`<a class="hs-link" href="${hsUrl(d.id)}" target="_blank">↗</a>`:''}
+    </div>
+  </div>`).join('');
+
+const qtdSorted=Object.keys(qtdRepT).filter(id=>QUOTA_REPS.find(r=>r.id===id)).sort((a,b)=>qtdRepT[b]-qtdRepT[a]);
+const qtdMax=qtdRepT[qtdSorted[0]]||1;
+document.getElementById('qtd-reps').innerHTML=qtdSorted.map((id,i)=>`
+  <div class="qtd-rep-row">
+    <div class="qtd-rep-rank">${i+1}</div>
+    <div class="qtd-rep-name">${OWN[id]||id}</div>
+    <div class="qtd-bar-wrap"><div class="qtd-bar" style="width:${(qtdRepT[id]/qtdMax*100).toFixed(1)}%"></div></div>
+    <div class="qtd-rep-amt">${ff$(qtdRepT[id])}</div>
+    <div class="qtd-rep-ct">${qtdRepC[id]} deal${qtdRepC[id]>1?'s':''}</div>
+  </div>`).join('');
+
+// ── Summary ───────────────────────────────────────────────────────────────────
+document.getElementById('sc').innerHTML=`
+  <div class="card"><div class="cl">Wins</div><div class="cv" style="color:var(--grn)">${ff$(wT)}</div><div class="cs">${W.length} deals</div></div>
+  <div class="card"><div class="cl">Losses</div><div class="cv" style="color:var(--red)">${ff$(lT)}</div><div class="cs">${L.length} deals</div></div>
+  <div class="card"><div class="cl">New pipeline</div><div class="cv" style="color:var(--acc)">${ff$(pT)}</div><div class="cs">${P.length} deals</div></div>
+  <div class="card"><div class="cl">Net (W–L)</div><div class="cv" style="color:${net>=0?'var(--grn)':'var(--red)'}">${net>=0?'':'-'}${ff$(Math.abs(net))}</div><div class="cs">${net>=0?'positive':'negative'} week</div></div>`;
+
+// ── Chart helpers ─────────────────────────────────────────────────────────────
+const TABS=['w','l','p','r','ww','att','sz','mom','qtd','s'];
+const ini={};
+function show(v){
+  TABS.forEach(x=>{document.getElementById('tab-'+x).classList.toggle('on',x===v);document.getElementById('t-'+x).classList.toggle('on',x===v);});
+  if(v==='r'  &&!ini.r)  {buildReps(); ini.r=true;}
+  if(v==='ww' &&!ini.ww) {buildWow();  ini.ww=true;}
+  if(v==='att'&&!ini.att){buildAtt();  ini.att=true;}
+  if(v==='sz' &&!ini.sz) {buildSz();   ini.sz=true;}
+  if(v==='mom'&&!ini.mom){buildMom();  ini.mom=true;}
+  if(v==='qtd'&&!ini.qtd){buildQtd();  ini.qtd=true;}
+  if(v==='s'  &&!ini.s)  {buildSum();  ini.s=true;}
+}
+
+const cOpts=(yFn)=>({responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>ff$(c.parsed.y)}}},scales:{x:{grid:{display:false},ticks:{color:'#8a93a8',font:{size:12}}},y:{grid:{color:'#ffffff08'},ticks:{color:'#8a93a8',font:{size:11},callback:yFn||((v)=>'$'+Math.round(v/1000)+'k')}}}});
+
+function buildReps(){
+  const rW={},rP={};
+  W.forEach(d=>{rW[d.o]=(rW[d.o]||0)+d.a;});
+  P.forEach(d=>{rP[d.o]=(rP[d.o]||0)+d.a;});
+  const active=QUOTA_REPS.map(r=>r.id).filter(id=>rW[id]||rP[id]);
+  new Chart(document.getElementById('cwr'),{type:'bar',data:{labels:active.map(sn),datasets:[{data:active.map(id=>rW[id]||0),backgroundColor:'#3dd68c44',borderColor:'#3dd68c',borderWidth:1.5,borderRadius:4,borderSkipped:false}]},options:cOpts()});
+  new Chart(document.getElementById('cpr'),{type:'bar',data:{labels:active.map(sn),datasets:[{data:active.map(id=>rP[id]||0),backgroundColor:'#4f8ef744',borderColor:'#4f8ef7',borderWidth:1.5,borderRadius:4,borderSkipped:false}]},options:cOpts()});
+  const wNB_=W.filter(d=>d.t==='n').reduce((s,d)=>s+d.a,0),wEB_=W.filter(d=>d.t==='e').reduce((s,d)=>s+d.a,0);
+  document.getElementById('dc').innerHTML=`
+    <div class="card"><div class="cl">New biz wins</div><div class="cv">${ff$(wNB_)}</div><div class="cs">${W.filter(d=>d.t==='n').length} deals</div></div>
+    <div class="card"><div class="cl">Existing biz wins</div><div class="cv">${ff$(wEB_)}</div><div class="cs">${W.filter(d=>d.t==='e').length} deals</div></div>
+    <div class="card"><div class="cl">New biz losses</div><div class="cv" style="color:var(--red)">${ff$(lNB)}</div><div class="cs">${L.filter(d=>d.t==='n').length} deals</div></div>
+    <div class="card"><div class="cl">Existing biz losses</div><div class="cv" style="color:var(--red)">${ff$(lEB)}</div><div class="cs">${L.filter(d=>d.t==='e').length} deals</div></div>`;
+}
+
+function buildWow(){
+  new Chart(document.getElementById('cww'),{type:'bar',data:{labels:['Prior week (May 12–18)','This week (May 19–25)'],datasets:[
+    {label:'Wins',data:[pwT,wT],backgroundColor:'#3dd68c44',borderColor:'#3dd68c',borderWidth:1.5,borderRadius:4,borderSkipped:false},
+    {label:'Losses',data:[0,lT],backgroundColor:'#f25c5c44',borderColor:'#f25c5c',borderWidth:1.5,borderRadius:4,borderSkipped:false},
+  ]},options:{...cOpts(),plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${ff$(c.parsed.y)}`}}}}});
+}
+
+function buildAtt(){
+  new Chart(document.getElementById('att-chart'),{type:'bar',
+    data:{labels:sortedReps.map(r=>sn(r.id)),datasets:[
+      {label:'Closed',data:sortedReps.map(r=>r.closed),backgroundColor:sortedReps.map(r=>attColor(r.pct)+'44'),borderColor:sortedReps.map(r=>attColor(r.pct)),borderWidth:1.5,borderRadius:4,borderSkipped:false},
+      {label:'Quota',data:sortedReps.map(r=>r.q),backgroundColor:'transparent',borderColor:'#ffffff18',borderWidth:1,type:'bar',borderRadius:4,borderSkipped:false},
+    ]},options:{...cOpts(),plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${ff$(c.parsed.y)}`}}}}});
+}
+
+function buildSz(){
+  const bkt=a=>a<10000?0:a<50000?1:a<100000?2:3;
+  const repCts=QUOTA_REPS.map(r=>{const c=[0,0,0,0];QTD.filter(d=>d.o===r.id).forEach(d=>c[bkt(d.a)]++);return c;});
+  const avgSz=QUOTA_REPS.map(r=>{const ds=QTD.filter(d=>d.o===r.id);return ds.length?ds.reduce((s,d)=>s+d.a,0)/ds.length:0;});
+  document.getElementById('szc').innerHTML=QUOTA_REPS.map((r,i)=>`<div class="card"><div class="cl">${sn(r.id)}</div><div class="cv">${avgSz[i]?f$(avgSz[i]):'—'}</div><div class="cs">avg deal size Q4</div></div>`).join('');
+  new Chart(document.getElementById('sz-chart'),{type:'bar',data:{labels:QUOTA_REPS.map(r=>sn(r.id)),datasets:[
+    {label:'<$10k',data:repCts.map(c=>c[0]),backgroundColor:'#1c3a5c',stack:'s'},
+    {label:'$10k–$50k',data:repCts.map(c=>c[1]),backgroundColor:'#1a4223',stack:'s'},
+    {label:'$50k–$100k',data:repCts.map(c=>c[2]),backgroundColor:'#3d2f0a',stack:'s'},
+    {label:'>$100k',data:repCts.map(c=>c[3]),backgroundColor:'#3d1a19',stack:'s'},
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#8a93a8'},stacked:true},y:{grid:{color:'#ffffff08'},ticks:{color:'#8a93a8'},stacked:true}}}});
+}
+
+function buildMom(){
+  const wkLabels=['Mar 30','Apr 6','Apr 13','Apr 20','Apr 27','May 4','May 11','May 18','May 25'];
+  const repWk={};
+  QUOTA_REPS.forEach(r=>{repWk[r.id]=Array(9).fill(0);});
+  const wkIdx=d=>{
+    const dt=new Date(d),base=new Date('2026-03-30');
+    return Math.min(8,Math.max(0,Math.floor((dt-base)/(7*86400000))));
+  };
+  QTD.forEach(d=>{if(repWk[d.o]){const i=wkIdx(d.d);repWk[d.o][i]+=d.a;}});
+  const CLR=['#58a6ff','#3fb950','#a371f7','#f0883e','#f85149','#79c0ff','#56d364'];
+  document.getElementById('momc').innerHTML=QUOTA_REPS.map((r,i)=>{
+    const wks=repWk[r.id],tw=wks[7]||0,pw=wks[6]||0,up=tw>=pw;
+    return `<div class="card"><div class="cl">${sn(r.id)}</div><div class="cv" style="color:${up?'var(--grn)':'var(--red)'}">${up?'↑ Accel':'↓ Decel'}</div><div class="cs">Wk May 18: ${f$(tw)}</div></div>`;
+  }).join('');
+  new Chart(document.getElementById('mom-chart'),{type:'line',data:{labels:wkLabels,datasets:QUOTA_REPS.map((r,i)=>({label:sn(r.id),data:repWk[r.id],borderColor:CLR[i],backgroundColor:'transparent',borderWidth:2,pointRadius:3,tension:.3}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8a93a8',font:{size:11},boxWidth:12}}},scales:{x:{grid:{display:false},ticks:{color:'#8a93a8'}},y:{grid:{color:'#ffffff08'},ticks:{color:'#8a93a8',callback:v=>'$'+Math.round(v/1000)+'k'}}}}});
+}
+
+function buildQtd(){
+  const wkLabels=['Mar 30','Apr 6','Apr 13','Apr 20','Apr 27','May 4','May 11','May 18','May 25'];
+  const wkTotals=Array(9).fill(0);
+  const wkIdx=d=>{const dt=new Date(d),base=new Date('2026-03-30');return Math.min(8,Math.max(0,Math.floor((dt-base)/(7*86400000))));};
+  QTD.forEach(d=>{wkTotals[wkIdx(d.d)]+=d.a;});
+  new Chart(document.getElementById('qtd-bar'),{type:'bar',data:{labels:wkLabels,datasets:[{label:'Closed Won',data:wkTotals,backgroundColor:wkTotals.map((_,i)=>i===7?'rgba(167,139,250,0.85)':'rgba(167,139,250,0.3)'),borderColor:'rgba(167,139,250,0.7)',borderWidth:1.5,borderRadius:5,borderSkipped:false}]},options:{...cOpts(),plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>ff$(c.parsed.y)}}}}});
+}
+
+function buildSum(){
+  new Chart(document.getElementById('cs'),{type:'bar',data:{labels:['Wins','Losses','New pipeline'],datasets:[{data:[wT,lT,pT],backgroundColor:['#3dd68c44','#f25c5c44','#4f8ef744'],borderColor:['#3dd68c','#f25c5c','#4f8ef7'],borderWidth:1.5,borderRadius:5,borderSkipped:false}]},options:cOpts()});
+}
 </script>
 </body>
 </html>
